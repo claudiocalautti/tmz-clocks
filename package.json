@@ -4,8 +4,7 @@
   "description": "Tmz Clocks App.",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.4.3",
-    "express": "^4.4.5"
+    "express": "^4.12.3"
   },
   "devDependencies": {},
   "scripts": {
