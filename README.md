@@ -1,1 +1,1 @@
-# tmz-clocks
+# Tmz Clocks App
