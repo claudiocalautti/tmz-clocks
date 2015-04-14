@@ -2,10 +2,27 @@
 <html>
   <head>
     <title>Tmz Clocks App</title>
+    <style>
+      body {
+        font-family: 'Courier New';
+      }
+      .clock {
+        width: 150px;
+        height: 130px;
+        margin: 10px;
+        border: 3px solid;
+        padding: 20px;
+        float: left;
+      }
+    </style>
   </head>
   <body>
+    <!-- Libraries -->
     <script src="scripts/react-0.13.1/react.js"></script>
     <script src="scripts/react-0.13.1/JSXTransformer.js"></script>
+    <!-- App -->
+    <script type="text/jsx" src="scripts/Clock.jsx"></script>
+    <script type="text/jsx" src="scripts/Wall.jsx"></script>
     <script type="text/jsx" src="scripts/app.jsx"></script>
   </body>
 </html>
