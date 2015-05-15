@@ -29,6 +29,8 @@ var Wall =  React.createClass({
 
     var jsonDB = JSON.parse(event.target.response);
 
+    console.log(jsonDB.length);
+
     this.setState({
       database: jsonDB
     });
@@ -41,9 +43,9 @@ var Wall =  React.createClass({
       var timezone = item.timezone;
       var offsets = item.offsets;
 
-      if (timezone === 'Europe/London') {
+      // if (timezone === 'Australia/Hobart') {
         return <Clock key={i} timezone={item.timezone} offsets={item.offsets} />
-      }
+      // }
     });
 
     var element = (

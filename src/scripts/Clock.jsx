@@ -76,9 +76,20 @@ var Clock = React.createClass({
     var date = new Date();
     var offset = this._computeOffset();
 
+    var hh = date.getHours() + offset.hh;
+    var mm = date.getMinutes() + offset.mm;
+
+    if (hh < 0) {
+      hh = 24 - Math.abs(hh);
+    }
+
+    if (mm > 60) {
+      mm = mm - 60;
+    }
+
     var clock = {
-      hh: this._pad(date.getHours() + offset.hh),
-      mm: this._pad(date.getMinutes() + offset.mm),
+      hh: this._pad(hh),
+      mm: this._pad(mm),
       ss: this._pad(date.getSeconds())
     };
 
@@ -91,23 +102,20 @@ var Clock = React.createClass({
    */
   _computeOffset: function() {
 
-    // RESTART FROM HERE....
-    console.log(this._isDST());
-
     var date = new Date();
 
-    var currentOffset = date.getTimezoneOffset() / 60
-    var givenOffset = this.props.offset;
+    var currentOffset = date.getTimezoneOffset() / 60;
 
-    var offset = givenOffset + currentOffset;
-    var hhOffset = (offset > 0) ? Math.floor(offset) : Math.ceil(offset);
-    var mmOffset = ((offset > 0) ? Math.abs(offset) - hhOffset : Math.abs(offset) + hhOffset);
+    var givenOffset = (this._isDST() && this.props.offsets.utc_dst) ? this.props.offsets.utc_dst : this.props.offsets.utc;
 
-    // console.log(offset, hhOffset, mmOffset);
+    givenOffset += currentOffset;
+
+    var hhOffset = (givenOffset > 0) ? Math.floor(givenOffset) : Math.ceil(givenOffset);
+    var mmOffset = ((givenOffset > 0) ? Math.abs(givenOffset) - hhOffset : Math.abs(givenOffset) + hhOffset) * 60;
 
     return {
-      hh: 0,
-      mm: 0
+      hh: hhOffset,
+      mm: mmOffset
     }
   },
 
@@ -157,7 +165,7 @@ var Clock = React.createClass({
           City: <strong>{city}</strong>
         </p>
         <p>
-          Time: <strong>{clock.hh}:{clock.mm}:{clock.ss}</strong>
+          Time: <strong style={{color: 'red'}}>{clock.hh}:{clock.mm}:{clock.ss}</strong>
         </p>
         <p>
           Date: <strong>{date}</strong>
