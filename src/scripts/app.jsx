@@ -1,4 +1,3 @@
-
 /**
  * Append the Wall to the body.
  */
