@@ -1,17 +1,7 @@
-/**
- * Append the Wall to the body.
- */
+var React = require('React');
+var Wall = require('./components/Wall.jsx');
+
 React.render(
   <Wall />,
-  document.querySelector('body')
-  // document.body
+  document.body
 );
-
-
-// /**
-//  * Append the Clock to the body.
-//  */
-// React.render(
-//   <Clock timezone="Europe/London" />,
-//   document.querySelector('body')
-// );

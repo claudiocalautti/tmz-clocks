@@ -1,22 +1,22 @@
 {
   "name": "tmz-clocks-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tmz Clocks App.",
-  "main": "server.js",
-  "dependencies": {
-    "express": "^4.12.3"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
+  "author": "Claudio Calautti <claudio@creativefrontend.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/claudiocalautti/tmz-clocks-app.git"
   },
-  "author": "claudiocalautti",
   "bugs": {
     "url": "https://github.com/claudiocalautti/tmz-clocks-app/issues"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.7.3",
+    "browserify": "^10.2.1",
+    "gulp": "^3.8.10",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
   }
 }

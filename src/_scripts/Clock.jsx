@@ -11,7 +11,7 @@ var Clock = React.createClass({
    */
   propTypes: {
     timezone: React.PropTypes.string.isRequired,
-    offsets: React.PropTypes.object
+    offsets: React.PropTypes.array
   },
 
   /**
