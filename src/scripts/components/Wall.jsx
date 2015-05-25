@@ -19,7 +19,22 @@ module.exports = React.createClass({
    */
   render: function() {
 
-    var country = 'Italy';
+    var city = {
+      "geonameid": 3165524,
+      "name": "Turin",
+      "country": "IT",
+      "lat": 45.07049,
+      "long": 7.68682,
+      "zone": "Europe/Rome"
+    };
+
+    var country = {
+      "name": "Italy",
+      "abbr": "IT",
+      "zones": [
+        "Europe/Rome"
+      ]
+    };
 
     var zone = {
       "name": "Europe/Rome",
@@ -44,7 +59,13 @@ module.exports = React.createClass({
       <main>
         <h1>Wall</h1>
         <Search />
-        <Clock country={country} zone={zone} />
+        <Clock
+          city={city}
+          zone={zone}
+          showCountry={true}
+          hours12={false}
+          debug={false}
+        />
       </main>
     );
   }

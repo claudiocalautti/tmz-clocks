@@ -1,8 +1,9 @@
 var React = require('react');
+var React = require('react/addons');
 
 /**
  * Clock component (React docs on api methods).
- * @description Get country with its timezone data and calculate time.
+ * @description Get city with its timezone data and calculate time.
  * @constructor
  */
 module.exports = React.createClass({
@@ -19,20 +20,25 @@ module.exports = React.createClass({
    * @type {Object}
    */
   propTypes: {
-    country: React.PropTypes.string.isRequired,
+    city: React.PropTypes.object.isRequired,
     zone: React.PropTypes.object.isRequired
   },
 
   /**
    * Invoked once before the component is mounted.
    * The return value will be used as the initial value of this.state.
-   * Set initial time and date.
    * @type {Object}
    */
   getInitialState: function() {
+
+    var date = new Date();
+
+    if (this.props.debug) {
+      this.__testTime(date);
+    }
+
     return {
-      time: this._getTime(),
-      date: this._getDate()
+      time: this._getTime(date)
     };
   },
 
@@ -42,14 +48,10 @@ module.exports = React.createClass({
    */
   componentWillMount: function() {
 
-    var delay = this._syncTime();
-
-    setTimeout(function() {
-
+    this._syncTick(function() {
       this._tick();
       this.timer = setInterval(this._tick, 1000);
-
-    }.bind(this), delay);
+    }, this);
   },
 
   /**
@@ -60,15 +62,17 @@ module.exports = React.createClass({
   },
 
   /**
-   * Sync time by detecting when next tick will occour.
-   * @return {number} The amount of ms left before next tick.
+   * Sync tick by detecting when next second will occour and fire callback.
+   * @param {Function} callback The callback to run when second change.
+   * @param {Object} context The instance context.
    * @private
    */
-  _syncTime: function() {
+  _syncTick: function(callback, context) {
 
     var date = new Date();
+    var delay = 1000 - date.getMilliseconds();
 
-    return 1000 - date.getMilliseconds();
+    setTimeout(callback.bind(context), delay);
   },
 
   /**
@@ -77,74 +81,134 @@ module.exports = React.createClass({
    */
   _tick: function() {
 
+    var date = new Date();
+
     this.setState({
-      time: this._getTime()
+      time: this._getTime(date)
     });
   },
 
   /**
-   * Set the clock object to current time.
-   * @return {Object} The current time.
+   * Set the clock object to zone time, obtain difference
+   * and add/subtract to local time (notice that diff.hh can be negative).
+   * @param {Object} date The `new Date()` object.
+   * @return {Object} The current zone time.
    * @private
    */
-  _getTime: function() {
+  _getTime: function(date) {
 
-    var date = new Date();
-    var offset = this._getOffset(date);
+    var diff = this._getDifference(date);
 
-    var hh = date.getHours() + offset.HH;
-    var mm = date.getMinutes() + offset.MM;
+    var hh = date.getHours() + diff.hh;
+    var mm = date.getMinutes() + diff.mm;
 
-    if (hh < 0) {
-      hh = 24 - Math.abs(hh);
-    }
+    var hours12 = this.props.hours12;
 
-    if (mm > 60) {
+    var when = this._setWhenSentence('Today, ', diff);
+
+    // Once obtained the local hours/minutes and added the
+    // difference from the desidered zone check edge cases A, B, C.
+
+    // A: Minutes above one hour, go to next hour.
+    if (mm >= 60) {
+      hh ++;
       mm = mm - 60;
     }
 
+    // B: At midnight local time, minus zone difference
+    // hh will be negative and refer to a day behind.
+    if (hh < 0) {
+
+      // More than 24 hours behind, it can happen only between
+      // UTC +14 (local) and UTC -12 (zone) and least for 2 hours or more.
+      if (diff.hh < -24) {
+        // TODO: Decrease a day in date can be done here.
+        when = 'Two days behind';
+        // Restart from midnight.
+        hh += 24;
+      } else {
+        // TODO: Decrease a day in date can be done here.
+        when = this._setWhenSentence('Yesterday, ', diff);
+      }
+
+      hh = 24 - Math.abs(hh);
+    }
+
+    // C: When difference greater than hours left to midnight,
+    // hh will be equal to at least 24 and refer to a day ahead.
+    if (hh > 23) {
+
+      // More than a 24 hours ahead, it can happen only between
+      // UTC -12 (local) and UTC +14 (zone) and least for 2 hours or more.
+      if (diff.hh > 24) {
+        // TODO: Increase a day in date can be done here.
+        when = 'Two days ahead.';
+      } else {
+        // TODO: Increase a day in date can be done here.
+        when = this._setWhenSentence('Tomorrow, ', diff);
+      }
+
+      hh = hh - 24;
+    }
+
+    // Set 12-hours clock.
+    if (hours12) {
+      hours12 = (hh >= 12) ? 'PM' : 'AM';
+      // http://stackoverflow.com/a/14399178
+      hh = ((hh + 11) % 12 + 1);
+    }
+
     return {
-      HH: this._pad(hh),
-      MM: this._pad(mm),
-      SS: this._pad(date.getSeconds())
+      hh: this._pad(hh),
+      mm: this._pad(mm),
+      ss: this._pad(date.getSeconds()),
+      hours12: hours12,
+      when: when
     };
   },
 
   /**
-   * Get offset.
+   * Calculate zone difference from local time, subtract the zone UTC
+   * offset (based on DST) to the local UTC offset and calculate zone
+   * difference in hours and minutes.
    * @param {Object} date The `new Date()` object.
+   * @return {Object} The zone difference in hours and minutes.
    * @private
    */
-  _getOffset: function(date) {
+  _getDifference: function(date) {
 
     var isDST = this._isDST();
 
-    var offset = date.getTimezoneOffset();
+    // Local UTC offset in minutes.
+    var offset = date.getTimezoneOffset(); // -60
 
-    var offsets = this.props.zone.offsets;
+    // Zone UTC offset in minutes.
+    var offsets = this.props.zone.offsets; // 285 (4.75hrs)
 
     // Last offset in array is associated with
     // untils `null` and never refer to DST.
     var lastOffset = offsets.length - 1;
 
     if (isDST) {
-      offset -= offsets[lastOffset - 1];
+      offset -= offsets[lastOffset - 1]; // -345
     } else {
       offset -= offsets[lastOffset];
     }
 
-    var HH = Math.floor(offset / 60);
-    var MM = offset - (HH * 60);
+    // Zone difference in hours and minutes,
+    // notice that minutes are never negative.
+    var hh = Math.floor(offset / 60); // (-5.75) = -6
+    var mm = offset - (hh * 60); // -345 - (-6*60) = 15
 
     return {
-      HH: HH,
-      MM: MM
+      hh: hh, // -6
+      mm: mm // 15
     };
   },
 
   /**
    * Detect if DST is currently observed.
-   * @param {Object} date The `new Date()` object.
+   * @return {boolean} True if DST is currently observed in the given zone.
    * @private
    */
   _isDST: function() {
@@ -197,24 +261,35 @@ module.exports = React.createClass({
     return isDST;
   },
 
-
   /**
-   * Get current date.
-   * @return {string} The current date formatted as DD:MM:YYYY.
+   * Set when sentence.
+   * @param {String} day The named day(s) like `Today`, `Tomorrow`, etc.
+   * @param {Object} diff The zone difference from local time.
+   * @return {String} The when sentence.
    * @private
    */
-  _getDate: function() {
+  _setWhenSentence: function(day, diff) {
 
-    var date = new Date();
+    var hh = diff.hh;
+    var mm = diff.mm;
 
-    var options = {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    };
+    // Just `Today` if no difference from local time.
+    if (hh === 0 && mm === 0) return day.replace(', ', '');
 
-    return date.toLocaleDateString('en-GB', options);
+    var hours;
+    var direction = (hh > 0) ? ' ahead.' : ' behind.';
+
+    if (Math.abs(hh) > 1) {
+      hours = Math.abs(hh) + ' hours';
+    } else {
+      hours = Math.abs(hh) + ' hour';
+    }
+
+    if (hh > 0 && mm > 0) {
+      hours = hh + 'h ' + mm + 'm'
+    }
+
+    return day + hours + direction;
   },
 
   /**
@@ -231,30 +306,89 @@ module.exports = React.createClass({
   },
 
   /**
+   * Test my computed time with time given from .toLocaleString()
+   * for supported zones and log results.
+   * TODO: Remove for production.
+   * @private
+   */
+  __testTime: function(date) {
+
+    try {
+
+      var zone = this.props.zone.name;
+
+      var correctDateString = date.toLocaleString(undefined, {
+        timeZone: zone
+      });
+
+      var correctDate = new Date(correctDateString);
+
+      var myDate = this._getTime(date);
+
+      console.log('\n');
+
+      if (correctDate.getHours() !== Number(myDate.hh)) {
+
+        console.log('%cHOURS WRONG in ' + zone,
+          'color: red; font-weight:bold;');
+      } else if (correctDate.getMinutes() !== Number(myDate.mm)) {
+
+        console.log('%cHOURS WRONG in ' + zone,
+          'color: red; font-weight:bold;');
+      } else if (correctDate.getSeconds() !== Number(myDate.ss)) {
+
+        console.log('%cSECONDS WRONG in ' + zone,
+          'color: red; font-weight:bold;');
+      } else {
+
+        console.log('%cTIME CORRECT in ' + zone,
+          'color: green; font-weight:bold;');
+        console.log(correctDate);
+        console.log(myDate);
+      }
+
+    } catch (e) {
+
+      if (e instanceof RangeError) {
+        console.log('%c' + e.message + ':', 'color: orange;');
+      }
+    }
+  },
+
+  /**
    * Render.
    * @return {ReactElement} The Clock component.
    */
   render: function() {
 
-    var country = this.props.country;
-    var zone = this.props.zone;
-
+    var city = this.props.city;
     var time = this.state.time;
+
+    var showCountry = this.props.hours12;
 
     return (
       <div className="clock">
+
+        {this.props.debug ? <p>{this.props.zone.name}</p> : ''}
+
         <p>
-          Country: <strong>{country}</strong>
+          <strong>
+            {city.name}{showCountry ? ' (' + city.country + ')' : ''}
+          </strong>
         </p>
+
         <p>
-          Zone: <strong>{zone.name} ({zone.abbrs[0]})</strong>
+          <strong>
+            {time.hh}:{time.mm}:{time.ss} {time.hours12}
+          </strong>
         </p>
+
         <p>
-          Time: <strong>{time.HH}:{time.MM}:{time.SS}</strong>
+          <strong>
+            {time.when}{time.diff}
+          </strong>
         </p>
-        <p>
-          Date: <strong>{this.state.date}</strong>
-        </p>
+
       </div>
     );
   }
