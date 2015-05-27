@@ -37,40 +37,7 @@ var Wall = React.createClass({
 
   _getYou: function() {
 
-    var city = {
-      "geonameid": 3165524,
-      "name": "Turin",
-      "country": "IT",
-      "lat": 45.07049,
-      "long": 7.68682,
-      "zone": "Europe/Rome"
-    };
-
-    var zone = {
-      "name": "Europe/Rome",
-      "abbrs": [
-        "CET",
-        "CEST",
-        "CET"
-      ],
-      "untils": [
-        1427590800000,
-        1445734800000,
-        null
-      ],
-      "offsets": [
-        -60,
-        -120,
-        -60
-      ]
-    };
-
     return <Clock
-      city={city}
-      zone={zone}
-      showCity={false}
-      showCountry={false}
-      showDay={false}
       hours12={false}
       debug={false} />;
   },
@@ -91,9 +58,6 @@ var Wall = React.createClass({
         key={i}
         city={city}
         zone={zone}
-        showCity={true}
-        showCountry={true}
-        showDay={true}
         hours12={false}
         debug={false} />;
 

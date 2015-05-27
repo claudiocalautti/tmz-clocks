@@ -15,8 +15,8 @@ var Clock = React.createClass({
    * @type {Object}
    */
   propTypes: {
-    city: React.PropTypes.object.isRequired,
-    zone: React.PropTypes.object.isRequired
+    city: React.PropTypes.object,
+    zone: React.PropTypes.object
   },
 
   /**
@@ -172,6 +172,13 @@ var Clock = React.createClass({
    * @private
    */
   _getDifference: function(date) {
+
+    if (!this.props.zone) {
+      return {
+        hh: 0,
+        mm: 0
+      };
+    }
 
     var isDST = this._isDST();
 
@@ -360,8 +367,6 @@ var Clock = React.createClass({
     var city = this.props.city;
     var time = this.state.time;
 
-    var showCity = this.props.showCity;
-    var showCountry = this.props.showCountry;
     var showDay = this.props.showDay;
 
     return (
@@ -369,19 +374,16 @@ var Clock = React.createClass({
         {this.props.debug ? <p>TZ: {this.props.zone.name}</p> : null}
         <p>
           <strong>
-            {showCity ? city.name : 'YOU'}
-            {showCountry ? ' (' + city.country + ')' : null}
+            {city ? city.name : 'YOU'}
+            {city && city.country ? ' (' + city.country + ')' : null}
           </strong>
         </p>
         <p>
           <strong>{time.hh}:{time.mm}:{time.ss}{time.hours12 ? ' ' + time.hours12 : null}</strong>
         </p>
-        {showDay ?
-          <p>
-            <strong>{time.when}{time.diff}</strong>
-          </p>
-          : null
-        }
+        <p>
+          <strong>{time.when}{time.diff}</strong>
+        </p>
       </div>
     );
   }

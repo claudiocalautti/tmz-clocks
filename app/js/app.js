@@ -19853,8 +19853,8 @@ var Clock = React.createClass({displayName: "Clock",
    * @type {Object}
    */
   propTypes: {
-    city: React.PropTypes.object.isRequired,
-    zone: React.PropTypes.object.isRequired
+    city: React.PropTypes.object,
+    zone: React.PropTypes.object
   },
 
   /**
@@ -20010,6 +20010,13 @@ var Clock = React.createClass({displayName: "Clock",
    * @private
    */
   _getDifference: function(date) {
+
+    if (!this.props.zone) {
+      return {
+        hh: 0,
+        mm: 0
+      };
+    }
 
     var isDST = this._isDST();
 
@@ -20198,8 +20205,6 @@ var Clock = React.createClass({displayName: "Clock",
     var city = this.props.city;
     var time = this.state.time;
 
-    var showCity = this.props.showCity;
-    var showCountry = this.props.showCountry;
     var showDay = this.props.showDay;
 
     return (
@@ -20207,19 +20212,16 @@ var Clock = React.createClass({displayName: "Clock",
         this.props.debug ? React.createElement("p", null, "TZ: ", this.props.zone.name) : null, 
         React.createElement("p", null, 
           React.createElement("strong", null, 
-            showCity ? city.name : 'YOU', 
-            showCountry ? ' (' + city.country + ')' : null
+            city ? city.name : 'YOU', 
+            city && city.country ? ' (' + city.country + ')' : null
           )
         ), 
         React.createElement("p", null, 
           React.createElement("strong", null, time.hh, ":", time.mm, ":", time.ss, time.hours12 ? ' ' + time.hours12 : null)
         ), 
-        showDay ?
-          React.createElement("p", null, 
-            React.createElement("strong", null, time.when, time.diff)
-          )
-          : null
-        
+        React.createElement("p", null, 
+          React.createElement("strong", null, time.when, time.diff)
+        )
       )
     );
   }
@@ -20305,40 +20307,7 @@ var Wall = React.createClass({displayName: "Wall",
 
   _getYou: function() {
 
-    var city = {
-      "geonameid": 3165524,
-      "name": "Turin",
-      "country": "IT",
-      "lat": 45.07049,
-      "long": 7.68682,
-      "zone": "Europe/Rome"
-    };
-
-    var zone = {
-      "name": "Europe/Rome",
-      "abbrs": [
-        "CET",
-        "CEST",
-        "CET"
-      ],
-      "untils": [
-        1427590800000,
-        1445734800000,
-        null
-      ],
-      "offsets": [
-        -60,
-        -120,
-        -60
-      ]
-    };
-
     return React.createElement(Clock, {
-      city: city, 
-      zone: zone, 
-      showCity: false, 
-      showCountry: false, 
-      showDay: false, 
       hours12: false, 
       debug: false});
   },
@@ -20359,9 +20328,6 @@ var Wall = React.createClass({displayName: "Wall",
         key: i, 
         city: city, 
         zone: zone, 
-        showCity: true, 
-        showCountry: true, 
-        showDay: true, 
         hours12: false, 
         debug: false});
 
