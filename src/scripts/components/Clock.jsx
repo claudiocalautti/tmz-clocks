@@ -1,19 +1,14 @@
+/** @jsx React.DOM */
+
+'use strict';
+
 var React = require('react');
-var React = require('react/addons');
 
 /**
- * Clock component (React docs on api methods).
- * @description Get city with its timezone data and calculate time.
- * @constructor
+ * Clock component.
+ * Get city with its timezone data and calculate time.
  */
-module.exports = React.createClass({
-
-  /**
-   * Manually set component name because with browserify
-   * react detect `exports` by default.
-   * @type {string}
-   */
-  displayName: 'Clock',
+var Clock = React.createClass({
 
   /**
    * Validate props.
@@ -34,6 +29,7 @@ module.exports = React.createClass({
     var date = new Date();
 
     if (this.props.debug) {
+      this.props.hours12 = false;
       this.__testTime(date);
     }
 
@@ -364,32 +360,32 @@ module.exports = React.createClass({
     var city = this.props.city;
     var time = this.state.time;
 
-    var showCountry = this.props.hours12;
+    var showCity = this.props.showCity;
+    var showCountry = this.props.showCountry;
+    var showDay = this.props.showDay;
 
     return (
       <div className="clock">
-
-        {this.props.debug ? <p>{this.props.zone.name}</p> : ''}
-
+        {this.props.debug ? <p>TZ: {this.props.zone.name}</p> : null}
         <p>
           <strong>
-            {city.name}{showCountry ? ' (' + city.country + ')' : ''}
+            {showCity ? city.name : 'YOU'}
+            {showCountry ? ' (' + city.country + ')' : null}
           </strong>
         </p>
-
         <p>
-          <strong>
-            {time.hh}:{time.mm}:{time.ss} {time.hours12}
-          </strong>
+          <strong>{time.hh}:{time.mm}:{time.ss}{time.hours12 ? ' ' + time.hours12 : null}</strong>
         </p>
-
-        <p>
-          <strong>
-            {time.when}{time.diff}
-          </strong>
-        </p>
-
+        {showDay ?
+          <p>
+            <strong>{time.when}{time.diff}</strong>
+          </p>
+          : null
+        }
       </div>
     );
   }
+
 });
+
+module.exports = Clock;

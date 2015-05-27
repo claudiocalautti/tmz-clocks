@@ -1,12 +1,15 @@
+/** @jsx React.DOM */
+
+'use strict';
+
 var React = require('react');
 
 /**
  * Search component.
- * @description Capture user input and display a filtered list of countries
- *              with related timezone, when item clicked dispatch new country.
- * @constructor
+ * Capture user input and display a filtered list of countries
+ * with related timezone, when item clicked dispatch new country.
  */
-module.exports = React.createClass({
+var Search = React.createClass({
 
   displayName: 'Search',
 
@@ -28,3 +31,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Search;
