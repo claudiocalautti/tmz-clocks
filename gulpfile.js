@@ -5,7 +5,10 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var watchify = require('watchify');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 
 var b = browserify('./src/scripts/app.jsx', {
   cache: {},
@@ -24,6 +27,13 @@ function bundle() {
       console.log(e);
     })
     .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .on('error', function(e) {
+          console.log('JS Error', e);
+        })
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./app/js/'));
 };
 
