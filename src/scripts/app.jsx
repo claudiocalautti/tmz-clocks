@@ -6,8 +6,8 @@ var React = require('react');
 
 var Wall = require('./components/Wall.jsx');
 
-var cities = require('./data/cities.js');
-var zones = require('./data/zones.js');
+var cities = require('./data/cities100000.min.js');
+var zones = require('./data/zones.min.js');
 
 /**
  * App.

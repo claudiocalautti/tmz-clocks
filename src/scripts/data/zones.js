@@ -1,5 +1,5 @@
-module.exports = [
-  {
+module.exports = {
+  "Africa/Casablanca": {
     "name": "Africa/Casablanca",
     "abbrs": [
       "WET",
@@ -23,7 +23,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Africa/Ceuta": {
     "name": "Africa/Ceuta",
     "abbrs": [
       "CET",
@@ -41,7 +41,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Africa/El_Aaiun": {
     "name": "Africa/El_Aaiun",
     "abbrs": [
       "WET",
@@ -65,7 +65,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Africa/Windhoek": {
     "name": "Africa/Windhoek",
     "abbrs": [
       "WAST",
@@ -83,7 +83,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "America/Adak": {
     "name": "America/Adak",
     "abbrs": [
       "HST",
@@ -101,7 +101,7 @@ module.exports = [
       600
     ]
   },
-  {
+  "America/Anchorage": {
     "name": "America/Anchorage",
     "abbrs": [
       "AKST",
@@ -119,7 +119,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "America/Asuncion": {
     "name": "America/Asuncion",
     "abbrs": [
       "PYST",
@@ -137,7 +137,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Atka": {
     "name": "America/Atka",
     "abbrs": [
       "HST",
@@ -155,7 +155,7 @@ module.exports = [
       600
     ]
   },
-  {
+  "America/Bahia_Banderas": {
     "name": "America/Bahia_Banderas",
     "abbrs": [
       "CST",
@@ -173,7 +173,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Boise": {
     "name": "America/Boise",
     "abbrs": [
       "MST",
@@ -191,7 +191,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Cambridge_Bay": {
     "name": "America/Cambridge_Bay",
     "abbrs": [
       "MST",
@@ -209,7 +209,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Campo_Grande": {
     "name": "America/Campo_Grande",
     "abbrs": [
       "AMST",
@@ -227,7 +227,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Cancun": {
     "name": "America/Cancun",
     "abbrs": [
       "CST",
@@ -242,7 +242,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Chicago": {
     "name": "America/Chicago",
     "abbrs": [
       "CST",
@@ -260,7 +260,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Chihuahua": {
     "name": "America/Chihuahua",
     "abbrs": [
       "MST",
@@ -278,7 +278,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Cuiaba": {
     "name": "America/Cuiaba",
     "abbrs": [
       "AMST",
@@ -296,7 +296,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Dawson": {
     "name": "America/Dawson",
     "abbrs": [
       "PST",
@@ -314,7 +314,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Denver": {
     "name": "America/Denver",
     "abbrs": [
       "MST",
@@ -332,7 +332,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Detroit": {
     "name": "America/Detroit",
     "abbrs": [
       "EST",
@@ -350,7 +350,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Edmonton": {
     "name": "America/Edmonton",
     "abbrs": [
       "MST",
@@ -368,7 +368,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Ensenada": {
     "name": "America/Ensenada",
     "abbrs": [
       "PST",
@@ -386,7 +386,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Fort_Wayne": {
     "name": "America/Fort_Wayne",
     "abbrs": [
       "EST",
@@ -404,7 +404,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Glace_Bay": {
     "name": "America/Glace_Bay",
     "abbrs": [
       "AST",
@@ -422,7 +422,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Godthab": {
     "name": "America/Godthab",
     "abbrs": [
       "WGT",
@@ -440,7 +440,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Goose_Bay": {
     "name": "America/Goose_Bay",
     "abbrs": [
       "AST",
@@ -458,7 +458,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Grand_Turk": {
     "name": "America/Grand_Turk",
     "abbrs": [
       "EST",
@@ -476,7 +476,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Halifax": {
     "name": "America/Halifax",
     "abbrs": [
       "AST",
@@ -494,7 +494,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Havana": {
     "name": "America/Havana",
     "abbrs": [
       "CST",
@@ -512,7 +512,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Indianapolis": {
     "name": "America/Indiana/Indianapolis",
     "abbrs": [
       "EST",
@@ -530,7 +530,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Knox": {
     "name": "America/Indiana/Knox",
     "abbrs": [
       "CST",
@@ -548,7 +548,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Indiana/Marengo": {
     "name": "America/Indiana/Marengo",
     "abbrs": [
       "EST",
@@ -566,7 +566,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Petersburg": {
     "name": "America/Indiana/Petersburg",
     "abbrs": [
       "EST",
@@ -584,7 +584,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Tell_City": {
     "name": "America/Indiana/Tell_City",
     "abbrs": [
       "CST",
@@ -602,7 +602,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Indiana/Vevay": {
     "name": "America/Indiana/Vevay",
     "abbrs": [
       "EST",
@@ -620,7 +620,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Vincennes": {
     "name": "America/Indiana/Vincennes",
     "abbrs": [
       "EST",
@@ -638,7 +638,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indiana/Winamac": {
     "name": "America/Indiana/Winamac",
     "abbrs": [
       "EST",
@@ -656,7 +656,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Indianapolis": {
     "name": "America/Indianapolis",
     "abbrs": [
       "EST",
@@ -674,7 +674,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Inuvik": {
     "name": "America/Inuvik",
     "abbrs": [
       "MST",
@@ -692,7 +692,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Iqaluit": {
     "name": "America/Iqaluit",
     "abbrs": [
       "EST",
@@ -710,7 +710,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Juneau": {
     "name": "America/Juneau",
     "abbrs": [
       "AKST",
@@ -728,7 +728,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "America/Kentucky/Louisville": {
     "name": "America/Kentucky/Louisville",
     "abbrs": [
       "EST",
@@ -746,7 +746,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Kentucky/Monticello": {
     "name": "America/Kentucky/Monticello",
     "abbrs": [
       "EST",
@@ -764,7 +764,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Knox_IN": {
     "name": "America/Knox_IN",
     "abbrs": [
       "CST",
@@ -782,7 +782,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Los_Angeles": {
     "name": "America/Los_Angeles",
     "abbrs": [
       "PST",
@@ -800,7 +800,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Louisville": {
     "name": "America/Louisville",
     "abbrs": [
       "EST",
@@ -818,7 +818,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Matamoros": {
     "name": "America/Matamoros",
     "abbrs": [
       "CST",
@@ -836,7 +836,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Mazatlan": {
     "name": "America/Mazatlan",
     "abbrs": [
       "MST",
@@ -854,7 +854,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Menominee": {
     "name": "America/Menominee",
     "abbrs": [
       "CST",
@@ -872,7 +872,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Merida": {
     "name": "America/Merida",
     "abbrs": [
       "CST",
@@ -890,7 +890,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Mexico_City": {
     "name": "America/Mexico_City",
     "abbrs": [
       "CST",
@@ -908,7 +908,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Miquelon": {
     "name": "America/Miquelon",
     "abbrs": [
       "PMST",
@@ -926,7 +926,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Moncton": {
     "name": "America/Moncton",
     "abbrs": [
       "AST",
@@ -944,7 +944,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Monterrey": {
     "name": "America/Monterrey",
     "abbrs": [
       "CST",
@@ -962,7 +962,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Montevideo": {
     "name": "America/Montevideo",
     "abbrs": [
       "UYST",
@@ -980,7 +980,7 @@ module.exports = [
       120
     ]
   },
-  {
+  "America/Montreal": {
     "name": "America/Montreal",
     "abbrs": [
       "EST",
@@ -998,7 +998,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Nassau": {
     "name": "America/Nassau",
     "abbrs": [
       "EST",
@@ -1016,7 +1016,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/New_York": {
     "name": "America/New_York",
     "abbrs": [
       "EST",
@@ -1034,7 +1034,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Nipigon": {
     "name": "America/Nipigon",
     "abbrs": [
       "EST",
@@ -1052,7 +1052,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Nome": {
     "name": "America/Nome",
     "abbrs": [
       "AKST",
@@ -1070,7 +1070,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "America/North_Dakota/Beulah": {
     "name": "America/North_Dakota/Beulah",
     "abbrs": [
       "CST",
@@ -1088,7 +1088,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/North_Dakota/Center": {
     "name": "America/North_Dakota/Center",
     "abbrs": [
       "CST",
@@ -1106,7 +1106,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/North_Dakota/New_Salem": {
     "name": "America/North_Dakota/New_Salem",
     "abbrs": [
       "CST",
@@ -1124,7 +1124,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Ojinaga": {
     "name": "America/Ojinaga",
     "abbrs": [
       "MST",
@@ -1142,7 +1142,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Pangnirtung": {
     "name": "America/Pangnirtung",
     "abbrs": [
       "EST",
@@ -1160,7 +1160,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Port-au-Prince": {
     "name": "America/Port-au-Prince",
     "abbrs": [
       "EST",
@@ -1178,7 +1178,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Rainy_River": {
     "name": "America/Rainy_River",
     "abbrs": [
       "CST",
@@ -1196,7 +1196,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Rankin_Inlet": {
     "name": "America/Rankin_Inlet",
     "abbrs": [
       "CST",
@@ -1214,7 +1214,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Resolute": {
     "name": "America/Resolute",
     "abbrs": [
       "CST",
@@ -1232,7 +1232,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Santa_Isabel": {
     "name": "America/Santa_Isabel",
     "abbrs": [
       "PST",
@@ -1250,7 +1250,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Santiago": {
     "name": "America/Santiago",
     "abbrs": [
       "CLST",
@@ -1265,7 +1265,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "America/Sao_Paulo": {
     "name": "America/Sao_Paulo",
     "abbrs": [
       "BRST",
@@ -1283,7 +1283,7 @@ module.exports = [
       120
     ]
   },
-  {
+  "America/Scoresbysund": {
     "name": "America/Scoresbysund",
     "abbrs": [
       "EGT",
@@ -1301,7 +1301,7 @@ module.exports = [
       60
     ]
   },
-  {
+  "America/Shiprock": {
     "name": "America/Shiprock",
     "abbrs": [
       "MST",
@@ -1319,7 +1319,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "America/Sitka": {
     "name": "America/Sitka",
     "abbrs": [
       "AKST",
@@ -1337,7 +1337,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "America/St_Johns": {
     "name": "America/St_Johns",
     "abbrs": [
       "NST",
@@ -1355,7 +1355,7 @@ module.exports = [
       210
     ]
   },
-  {
+  "America/Thule": {
     "name": "America/Thule",
     "abbrs": [
       "AST",
@@ -1373,7 +1373,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "America/Thunder_Bay": {
     "name": "America/Thunder_Bay",
     "abbrs": [
       "EST",
@@ -1391,7 +1391,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Tijuana": {
     "name": "America/Tijuana",
     "abbrs": [
       "PST",
@@ -1409,7 +1409,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Toronto": {
     "name": "America/Toronto",
     "abbrs": [
       "EST",
@@ -1427,7 +1427,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "America/Vancouver": {
     "name": "America/Vancouver",
     "abbrs": [
       "PST",
@@ -1445,7 +1445,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Whitehorse": {
     "name": "America/Whitehorse",
     "abbrs": [
       "PST",
@@ -1463,7 +1463,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "America/Winnipeg": {
     "name": "America/Winnipeg",
     "abbrs": [
       "CST",
@@ -1481,7 +1481,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "America/Yakutat": {
     "name": "America/Yakutat",
     "abbrs": [
       "AKST",
@@ -1499,7 +1499,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "America/Yellowknife": {
     "name": "America/Yellowknife",
     "abbrs": [
       "MST",
@@ -1517,7 +1517,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "Antarctica/McMurdo": {
     "name": "Antarctica/McMurdo",
     "abbrs": [
       "NZDT",
@@ -1535,7 +1535,7 @@ module.exports = [
       -780
     ]
   },
-  {
+  "Antarctica/Palmer": {
     "name": "Antarctica/Palmer",
     "abbrs": [
       "CLST",
@@ -1550,7 +1550,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "Antarctica/South_Pole": {
     "name": "Antarctica/South_Pole",
     "abbrs": [
       "NZDT",
@@ -1568,7 +1568,7 @@ module.exports = [
       -780
     ]
   },
-  {
+  "Antarctica/Troll": {
     "name": "Antarctica/Troll",
     "abbrs": [
       "UTC",
@@ -1586,7 +1586,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Arctic/Longyearbyen": {
     "name": "Arctic/Longyearbyen",
     "abbrs": [
       "CET",
@@ -1604,7 +1604,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Asia/Amman": {
     "name": "Asia/Amman",
     "abbrs": [
       "EET",
@@ -1622,7 +1622,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Baku": {
     "name": "Asia/Baku",
     "abbrs": [
       "AZT",
@@ -1640,7 +1640,7 @@ module.exports = [
       -240
     ]
   },
-  {
+  "Asia/Beirut": {
     "name": "Asia/Beirut",
     "abbrs": [
       "EET",
@@ -1658,7 +1658,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Choibalsan": {
     "name": "Asia/Choibalsan",
     "abbrs": [
       "CHOT",
@@ -1676,7 +1676,7 @@ module.exports = [
       -480
     ]
   },
-  {
+  "Asia/Damascus": {
     "name": "Asia/Damascus",
     "abbrs": [
       "EET",
@@ -1694,7 +1694,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Gaza": {
     "name": "Asia/Gaza",
     "abbrs": [
       "EET",
@@ -1712,7 +1712,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Hebron": {
     "name": "Asia/Hebron",
     "abbrs": [
       "EET",
@@ -1730,7 +1730,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Hovd": {
     "name": "Asia/Hovd",
     "abbrs": [
       "HOVT",
@@ -1748,7 +1748,7 @@ module.exports = [
       -420
     ]
   },
-  {
+  "Asia/Istanbul": {
     "name": "Asia/Istanbul",
     "abbrs": [
       "EET",
@@ -1766,7 +1766,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Jerusalem": {
     "name": "Asia/Jerusalem",
     "abbrs": [
       "IST",
@@ -1784,7 +1784,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Nicosia": {
     "name": "Asia/Nicosia",
     "abbrs": [
       "EET",
@@ -1802,7 +1802,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Tehran": {
     "name": "Asia/Tehran",
     "abbrs": [
       "IRST",
@@ -1820,7 +1820,7 @@ module.exports = [
       -210
     ]
   },
-  {
+  "Asia/Tel_Aviv": {
     "name": "Asia/Tel_Aviv",
     "abbrs": [
       "IST",
@@ -1838,7 +1838,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Asia/Ulaanbaatar": {
     "name": "Asia/Ulaanbaatar",
     "abbrs": [
       "ULAT",
@@ -1856,7 +1856,7 @@ module.exports = [
       -480
     ]
   },
-  {
+  "Asia/Ulan_Bator": {
     "name": "Asia/Ulan_Bator",
     "abbrs": [
       "ULAT",
@@ -1874,7 +1874,7 @@ module.exports = [
       -480
     ]
   },
-  {
+  "Atlantic/Azores": {
     "name": "Atlantic/Azores",
     "abbrs": [
       "AZOT",
@@ -1892,7 +1892,7 @@ module.exports = [
       60
     ]
   },
-  {
+  "Atlantic/Bermuda": {
     "name": "Atlantic/Bermuda",
     "abbrs": [
       "AST",
@@ -1910,7 +1910,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "Atlantic/Canary": {
     "name": "Atlantic/Canary",
     "abbrs": [
       "WET",
@@ -1928,7 +1928,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Atlantic/Faeroe": {
     "name": "Atlantic/Faeroe",
     "abbrs": [
       "WET",
@@ -1946,7 +1946,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Atlantic/Faroe": {
     "name": "Atlantic/Faroe",
     "abbrs": [
       "WET",
@@ -1964,7 +1964,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Atlantic/Jan_Mayen": {
     "name": "Atlantic/Jan_Mayen",
     "abbrs": [
       "CET",
@@ -1982,7 +1982,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Atlantic/Madeira": {
     "name": "Atlantic/Madeira",
     "abbrs": [
       "WET",
@@ -2000,7 +2000,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Australia/ACT": {
     "name": "Australia/ACT",
     "abbrs": [
       "AEDT",
@@ -2018,7 +2018,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Adelaide": {
     "name": "Australia/Adelaide",
     "abbrs": [
       "ACDT",
@@ -2036,7 +2036,7 @@ module.exports = [
       -630
     ]
   },
-  {
+  "Australia/Broken_Hill": {
     "name": "Australia/Broken_Hill",
     "abbrs": [
       "ACDT",
@@ -2054,7 +2054,7 @@ module.exports = [
       -630
     ]
   },
-  {
+  "Australia/Canberra": {
     "name": "Australia/Canberra",
     "abbrs": [
       "AEDT",
@@ -2072,7 +2072,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Currie": {
     "name": "Australia/Currie",
     "abbrs": [
       "AEDT",
@@ -2090,7 +2090,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Hobart": {
     "name": "Australia/Hobart",
     "abbrs": [
       "AEDT",
@@ -2108,7 +2108,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/LHI": {
     "name": "Australia/LHI",
     "abbrs": [
       "LHDT",
@@ -2126,7 +2126,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Lord_Howe": {
     "name": "Australia/Lord_Howe",
     "abbrs": [
       "LHDT",
@@ -2144,7 +2144,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Melbourne": {
     "name": "Australia/Melbourne",
     "abbrs": [
       "AEDT",
@@ -2162,7 +2162,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/NSW": {
     "name": "Australia/NSW",
     "abbrs": [
       "AEDT",
@@ -2180,7 +2180,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/South": {
     "name": "Australia/South",
     "abbrs": [
       "ACDT",
@@ -2198,7 +2198,7 @@ module.exports = [
       -630
     ]
   },
-  {
+  "Australia/Sydney": {
     "name": "Australia/Sydney",
     "abbrs": [
       "AEDT",
@@ -2216,7 +2216,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Tasmania": {
     "name": "Australia/Tasmania",
     "abbrs": [
       "AEDT",
@@ -2234,7 +2234,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Victoria": {
     "name": "Australia/Victoria",
     "abbrs": [
       "AEDT",
@@ -2252,7 +2252,7 @@ module.exports = [
       -660
     ]
   },
-  {
+  "Australia/Yancowinna": {
     "name": "Australia/Yancowinna",
     "abbrs": [
       "ACDT",
@@ -2270,7 +2270,7 @@ module.exports = [
       -630
     ]
   },
-  {
+  "Brazil/East": {
     "name": "Brazil/East",
     "abbrs": [
       "BRST",
@@ -2288,7 +2288,7 @@ module.exports = [
       120
     ]
   },
-  {
+  "CET": {
     "name": "CET",
     "abbrs": [
       "CET",
@@ -2306,7 +2306,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "CST6CDT": {
     "name": "CST6CDT",
     "abbrs": [
       "CST",
@@ -2324,7 +2324,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "Canada/Atlantic": {
     "name": "Canada/Atlantic",
     "abbrs": [
       "AST",
@@ -2342,7 +2342,7 @@ module.exports = [
       240
     ]
   },
-  {
+  "Canada/Central": {
     "name": "Canada/Central",
     "abbrs": [
       "CST",
@@ -2360,7 +2360,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "Canada/Eastern": {
     "name": "Canada/Eastern",
     "abbrs": [
       "EST",
@@ -2378,7 +2378,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "Canada/Mountain": {
     "name": "Canada/Mountain",
     "abbrs": [
       "MST",
@@ -2396,7 +2396,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "Canada/Newfoundland": {
     "name": "Canada/Newfoundland",
     "abbrs": [
       "NST",
@@ -2414,7 +2414,7 @@ module.exports = [
       210
     ]
   },
-  {
+  "Canada/Pacific": {
     "name": "Canada/Pacific",
     "abbrs": [
       "PST",
@@ -2432,7 +2432,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "Canada/Yukon": {
     "name": "Canada/Yukon",
     "abbrs": [
       "PST",
@@ -2450,7 +2450,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "Chile/Continental": {
     "name": "Chile/Continental",
     "abbrs": [
       "CLST",
@@ -2465,7 +2465,7 @@ module.exports = [
       180
     ]
   },
-  {
+  "Chile/EasterIsland": {
     "name": "Chile/EasterIsland",
     "abbrs": [
       "EASST",
@@ -2480,7 +2480,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "Cuba": {
     "name": "Cuba",
     "abbrs": [
       "CST",
@@ -2498,7 +2498,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "EET": {
     "name": "EET",
     "abbrs": [
       "EET",
@@ -2516,7 +2516,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "EST5EDT": {
     "name": "EST5EDT",
     "abbrs": [
       "EST",
@@ -2534,7 +2534,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "Eire": {
     "name": "Eire",
     "abbrs": [
       "GMT",
@@ -2552,7 +2552,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Amsterdam": {
     "name": "Europe/Amsterdam",
     "abbrs": [
       "CET",
@@ -2570,7 +2570,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Andorra": {
     "name": "Europe/Andorra",
     "abbrs": [
       "CET",
@@ -2588,7 +2588,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Athens": {
     "name": "Europe/Athens",
     "abbrs": [
       "EET",
@@ -2606,7 +2606,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Belfast": {
     "name": "Europe/Belfast",
     "abbrs": [
       "GMT",
@@ -2624,7 +2624,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Belgrade": {
     "name": "Europe/Belgrade",
     "abbrs": [
       "CET",
@@ -2642,7 +2642,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Berlin": {
     "name": "Europe/Berlin",
     "abbrs": [
       "CET",
@@ -2660,7 +2660,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Bratislava": {
     "name": "Europe/Bratislava",
     "abbrs": [
       "CET",
@@ -2678,7 +2678,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Brussels": {
     "name": "Europe/Brussels",
     "abbrs": [
       "CET",
@@ -2696,7 +2696,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Bucharest": {
     "name": "Europe/Bucharest",
     "abbrs": [
       "EET",
@@ -2714,7 +2714,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Budapest": {
     "name": "Europe/Budapest",
     "abbrs": [
       "CET",
@@ -2732,7 +2732,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Busingen": {
     "name": "Europe/Busingen",
     "abbrs": [
       "CET",
@@ -2750,7 +2750,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Chisinau": {
     "name": "Europe/Chisinau",
     "abbrs": [
       "EET",
@@ -2768,7 +2768,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Copenhagen": {
     "name": "Europe/Copenhagen",
     "abbrs": [
       "CET",
@@ -2786,7 +2786,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Dublin": {
     "name": "Europe/Dublin",
     "abbrs": [
       "GMT",
@@ -2804,7 +2804,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Gibraltar": {
     "name": "Europe/Gibraltar",
     "abbrs": [
       "CET",
@@ -2822,7 +2822,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Guernsey": {
     "name": "Europe/Guernsey",
     "abbrs": [
       "GMT",
@@ -2840,7 +2840,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Helsinki": {
     "name": "Europe/Helsinki",
     "abbrs": [
       "EET",
@@ -2858,7 +2858,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Isle_of_Man": {
     "name": "Europe/Isle_of_Man",
     "abbrs": [
       "GMT",
@@ -2876,7 +2876,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Istanbul": {
     "name": "Europe/Istanbul",
     "abbrs": [
       "EET",
@@ -2894,7 +2894,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Jersey": {
     "name": "Europe/Jersey",
     "abbrs": [
       "GMT",
@@ -2912,7 +2912,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Kiev": {
     "name": "Europe/Kiev",
     "abbrs": [
       "EET",
@@ -2930,7 +2930,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Lisbon": {
     "name": "Europe/Lisbon",
     "abbrs": [
       "WET",
@@ -2948,7 +2948,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Ljubljana": {
     "name": "Europe/Ljubljana",
     "abbrs": [
       "CET",
@@ -2966,7 +2966,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/London": {
     "name": "Europe/London",
     "abbrs": [
       "GMT",
@@ -2984,7 +2984,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Europe/Luxembourg": {
     "name": "Europe/Luxembourg",
     "abbrs": [
       "CET",
@@ -3002,7 +3002,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Madrid": {
     "name": "Europe/Madrid",
     "abbrs": [
       "CET",
@@ -3020,7 +3020,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Malta": {
     "name": "Europe/Malta",
     "abbrs": [
       "CET",
@@ -3038,7 +3038,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Mariehamn": {
     "name": "Europe/Mariehamn",
     "abbrs": [
       "EET",
@@ -3056,7 +3056,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Monaco": {
     "name": "Europe/Monaco",
     "abbrs": [
       "CET",
@@ -3074,7 +3074,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Nicosia": {
     "name": "Europe/Nicosia",
     "abbrs": [
       "EET",
@@ -3092,7 +3092,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Oslo": {
     "name": "Europe/Oslo",
     "abbrs": [
       "CET",
@@ -3110,7 +3110,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Paris": {
     "name": "Europe/Paris",
     "abbrs": [
       "CET",
@@ -3128,7 +3128,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Podgorica": {
     "name": "Europe/Podgorica",
     "abbrs": [
       "CET",
@@ -3146,7 +3146,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Prague": {
     "name": "Europe/Prague",
     "abbrs": [
       "CET",
@@ -3164,7 +3164,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Riga": {
     "name": "Europe/Riga",
     "abbrs": [
       "EET",
@@ -3182,7 +3182,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Rome": {
     "name": "Europe/Rome",
     "abbrs": [
       "CET",
@@ -3200,7 +3200,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/San_Marino": {
     "name": "Europe/San_Marino",
     "abbrs": [
       "CET",
@@ -3218,7 +3218,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Sarajevo": {
     "name": "Europe/Sarajevo",
     "abbrs": [
       "CET",
@@ -3236,7 +3236,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Skopje": {
     "name": "Europe/Skopje",
     "abbrs": [
       "CET",
@@ -3254,7 +3254,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Sofia": {
     "name": "Europe/Sofia",
     "abbrs": [
       "EET",
@@ -3272,7 +3272,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Stockholm": {
     "name": "Europe/Stockholm",
     "abbrs": [
       "CET",
@@ -3290,7 +3290,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Tallinn": {
     "name": "Europe/Tallinn",
     "abbrs": [
       "EET",
@@ -3308,7 +3308,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Tirane": {
     "name": "Europe/Tirane",
     "abbrs": [
       "CET",
@@ -3326,7 +3326,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Tiraspol": {
     "name": "Europe/Tiraspol",
     "abbrs": [
       "EET",
@@ -3344,7 +3344,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Uzhgorod": {
     "name": "Europe/Uzhgorod",
     "abbrs": [
       "EET",
@@ -3362,7 +3362,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Vaduz": {
     "name": "Europe/Vaduz",
     "abbrs": [
       "CET",
@@ -3380,7 +3380,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Vatican": {
     "name": "Europe/Vatican",
     "abbrs": [
       "CET",
@@ -3398,7 +3398,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Vienna": {
     "name": "Europe/Vienna",
     "abbrs": [
       "CET",
@@ -3416,7 +3416,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Vilnius": {
     "name": "Europe/Vilnius",
     "abbrs": [
       "EET",
@@ -3434,7 +3434,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Warsaw": {
     "name": "Europe/Warsaw",
     "abbrs": [
       "CET",
@@ -3452,7 +3452,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Zagreb": {
     "name": "Europe/Zagreb",
     "abbrs": [
       "CET",
@@ -3470,7 +3470,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Europe/Zaporozhye": {
     "name": "Europe/Zaporozhye",
     "abbrs": [
       "EET",
@@ -3488,7 +3488,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "Europe/Zurich": {
     "name": "Europe/Zurich",
     "abbrs": [
       "CET",
@@ -3506,7 +3506,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "GB-Eire": {
     "name": "GB-Eire",
     "abbrs": [
       "GMT",
@@ -3524,7 +3524,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "GB": {
     "name": "GB",
     "abbrs": [
       "GMT",
@@ -3542,7 +3542,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Iran": {
     "name": "Iran",
     "abbrs": [
       "IRST",
@@ -3560,7 +3560,7 @@ module.exports = [
       -210
     ]
   },
-  {
+  "Israel": {
     "name": "Israel",
     "abbrs": [
       "IST",
@@ -3578,7 +3578,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "MET": {
     "name": "MET",
     "abbrs": [
       "MET",
@@ -3596,7 +3596,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "MST7MDT": {
     "name": "MST7MDT",
     "abbrs": [
       "MST",
@@ -3614,7 +3614,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "Mexico/BajaNorte": {
     "name": "Mexico/BajaNorte",
     "abbrs": [
       "PST",
@@ -3632,7 +3632,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "Mexico/BajaSur": {
     "name": "Mexico/BajaSur",
     "abbrs": [
       "MST",
@@ -3650,7 +3650,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "Mexico/General": {
     "name": "Mexico/General",
     "abbrs": [
       "CST",
@@ -3668,7 +3668,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "NZ-CHAT": {
     "name": "NZ-CHAT",
     "abbrs": [
       "CHADT",
@@ -3686,7 +3686,7 @@ module.exports = [
       -825
     ]
   },
-  {
+  "NZ": {
     "name": "NZ",
     "abbrs": [
       "NZDT",
@@ -3704,7 +3704,7 @@ module.exports = [
       -780
     ]
   },
-  {
+  "Navajo": {
     "name": "Navajo",
     "abbrs": [
       "MST",
@@ -3722,7 +3722,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "PST8PDT": {
     "name": "PST8PDT",
     "abbrs": [
       "PST",
@@ -3740,7 +3740,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "Pacific/Apia": {
     "name": "Pacific/Apia",
     "abbrs": [
       "WSDT",
@@ -3758,7 +3758,7 @@ module.exports = [
       -840
     ]
   },
-  {
+  "Pacific/Auckland": {
     "name": "Pacific/Auckland",
     "abbrs": [
       "NZDT",
@@ -3776,7 +3776,7 @@ module.exports = [
       -780
     ]
   },
-  {
+  "Pacific/Chatham": {
     "name": "Pacific/Chatham",
     "abbrs": [
       "CHADT",
@@ -3794,7 +3794,7 @@ module.exports = [
       -825
     ]
   },
-  {
+  "Pacific/Easter": {
     "name": "Pacific/Easter",
     "abbrs": [
       "EASST",
@@ -3809,7 +3809,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "Pacific/Fiji": {
     "name": "Pacific/Fiji",
     "abbrs": [
       "FJST",
@@ -3827,7 +3827,7 @@ module.exports = [
       -780
     ]
   },
-  {
+  "Poland": {
     "name": "Poland",
     "abbrs": [
       "CET",
@@ -3845,7 +3845,7 @@ module.exports = [
       -60
     ]
   },
-  {
+  "Portugal": {
     "name": "Portugal",
     "abbrs": [
       "WET",
@@ -3863,7 +3863,7 @@ module.exports = [
       0
     ]
   },
-  {
+  "Turkey": {
     "name": "Turkey",
     "abbrs": [
       "EET",
@@ -3881,7 +3881,7 @@ module.exports = [
       -120
     ]
   },
-  {
+  "US/Alaska": {
     "name": "US/Alaska",
     "abbrs": [
       "AKST",
@@ -3899,7 +3899,7 @@ module.exports = [
       540
     ]
   },
-  {
+  "US/Aleutian": {
     "name": "US/Aleutian",
     "abbrs": [
       "HST",
@@ -3917,7 +3917,7 @@ module.exports = [
       600
     ]
   },
-  {
+  "US/Central": {
     "name": "US/Central",
     "abbrs": [
       "CST",
@@ -3935,7 +3935,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "US/East-Indiana": {
     "name": "US/East-Indiana",
     "abbrs": [
       "EST",
@@ -3953,7 +3953,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "US/Eastern": {
     "name": "US/Eastern",
     "abbrs": [
       "EST",
@@ -3971,7 +3971,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "US/Indiana-Starke": {
     "name": "US/Indiana-Starke",
     "abbrs": [
       "CST",
@@ -3989,7 +3989,7 @@ module.exports = [
       360
     ]
   },
-  {
+  "US/Michigan": {
     "name": "US/Michigan",
     "abbrs": [
       "EST",
@@ -4007,7 +4007,7 @@ module.exports = [
       300
     ]
   },
-  {
+  "US/Mountain": {
     "name": "US/Mountain",
     "abbrs": [
       "MST",
@@ -4025,7 +4025,7 @@ module.exports = [
       420
     ]
   },
-  {
+  "US/Pacific-New": {
     "name": "US/Pacific-New",
     "abbrs": [
       "PST",
@@ -4043,7 +4043,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "US/Pacific": {
     "name": "US/Pacific",
     "abbrs": [
       "PST",
@@ -4061,7 +4061,7 @@ module.exports = [
       480
     ]
   },
-  {
+  "WET": {
     "name": "WET",
     "abbrs": [
       "WET",
@@ -4079,4 +4079,4 @@ module.exports = [
       0
     ]
   }
-];
+};

@@ -367,8 +367,6 @@ var Clock = React.createClass({
     var city = this.props.city;
     var time = this.state.time;
 
-    var showDay = this.props.showDay;
-
     return (
       <div className="clock">
         {this.props.debug ? <p>TZ: {this.props.zone.name}</p> : null}
