@@ -16,6 +16,8 @@
     "gulp": "^3.8.10",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
+    "jscs": "^1.13.1",
+    "jscs-jsdoc": "^1.0.1",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
     "vinyl-buffer": "^1.0.0",

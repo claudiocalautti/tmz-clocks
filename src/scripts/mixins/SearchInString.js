@@ -1,29 +1,32 @@
-// var SearchItemInArray = function(items, input) {
+/**
+ * Search in a large string of 'key value' matches, delimited by single quote.
+ * http://stackoverflow.com/a/3976066
+ * @param {string} value The value to search.
+ * @param {string} string The string of possible matches 'key value'.
+ * @param {number} limit The results limit.
+ */
+var SearchInString = function(value, string, limit) {
 
-//   var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
+  // Delimiter single quote.
+  var reg = new RegExp("'(\\d+) ([^']*" + value + "[^']*)'", "gi");
 
-//   return items.filter(function(item) {
-//     if (item.match(reg)) {
-//       return item;
-//     }
-//   });
-// }
+  var results = [];
 
-var SearchInString = function(search, string) {
+  var result;
 
-  // var reg = new RegExp('"(\\d+) ([^"]*' + search + '[^"]*)"','gi');
-  var reg = new RegExp("'(\\d+) ([^'']*" + search + "[^']*)'",'gi');
+  var i = 0;
 
-  var matches = reg.exec(string);
+  while (result = reg.exec(string)) {
 
-  var id = null;
+    results.push(result[1]);
+    i ++;
 
-  if (matches) {
-    id = matches[1];
+    if (i >= limit) {
+      break;
+    }
   }
 
-  return id;
-
+  return results;
 };
 
 module.exports = SearchInString;

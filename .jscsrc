@@ -1,10 +1,11 @@
 {
-  "preset": "google",
+  "preset": "airbnb",
+  "esprima": "esprima-fb",
   "fileExtensions": [".js",".jsx"],
   "plugins": [
     "jscs-jsdoc"
   ],
-  "jsDoc": {
+  "jsdoc": {
     "checkAnnotations": "closurecompiler",
     "checkParamNames": true,
     "requireParamTypes": true,
@@ -17,6 +18,5 @@
     "leadingUnderscoreAccess": "private",
     "enforceExistence": "exceptExports",
     "requireHyphenBeforeDescription": false
-  },
-  "esprima" : "esprima-fb"
+  }
 }

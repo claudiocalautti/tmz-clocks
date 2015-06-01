@@ -6,63 +6,103 @@ var React = require('react');
 
 var Search = require('./Search.jsx');
 var Clock = require('./Clock.jsx');
-var SearchInString = require('../mixins/SearchInString.js');
 
 /**
  * Wall component.
  */
 var Wall = React.createClass({
 
+  /**
+   * Validate props.
+   * @type {Object}
+   */
   propTypes: {
-    cities: React.PropTypes.object,
-    zones: React.PropTypes.object
+    cities: React.PropTypes.object.isRequired,
+    zones: React.PropTypes.object.isRequired,
+    showUserClock: React.PropTypes.bool,
+    hours12: React.PropTypes.bool
   },
 
   /**
    * Invoked once before the component is mounted.
    * The return value will be used as the initial value of this.state.
-   * @type {Object}
    */
   getInitialState: function() {
     return {
-      favorites: [],
-      favorite: null
+      favorites: JSON.parse(localStorage.getItem('favorites')) || []
     };
   },
 
-  _findCity: function(name) {
+  /**
+   * Add new city and its timezone to favorites.
+   * @param {Object} city The selected city.
+   */
+  addFavorite: function(city) {
 
-    var id = SearchInString(name, this.props.cities.search);
+    if (!city) {
+      return;
+    }
 
-    var city = this.props.cities.data[id];
-
-    console.clear();
-    console.log('Found: ', city);
-
-    this.setState({
-      favorite: city
-    });
-  },
-
-  _addFavorite: function() {
-
-    var city = this.state.favorite;
-
-    if (!city) return;
-
-    var zone = this.props.zones[this.state.favorite.zone];
-
-    console.log('ADD: ', city);
+    var zone = this.props.zones[city.zone];
 
     var favorite = {
       city: city,
       zone: zone
-    }
+    };
+
+    var favorites = this.state.favorites.concat(favorite);
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
 
     this.setState({
-      favorites: this.state.favorites.concat(favorite),
-      favorite: null
+      favorites: favorites
     });
+  },
+
+  /**
+   * Remove a city and its timezone from favorites.
+   * @param {number} index The index of the object in the favorites array.
+   */
+  removeFavorite: function(index) {
+
+    var favorites = this.state.favorites;
+
+    favorites.splice(index, 1);
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+
+    this.setState({
+      favorites: favorites
+    });
+  },
+
+  /**
+   * Get user local time clock.
+   * @return {ReactElement} The clock with the user machine time.
+   * @private
+   */
+  _getUserClock: function() {
+
+    return <Clock hours12={this.props.hours12} />;
+  },
+
+  /**
+   * Get the user favorite clocks.
+   * @return {ReactElement} The user favorite clocks.
+   * @private
+   */
+  _getFavoriteClocks: function() {
+
+    return this.state.favorites.map(function(favorite, i) {
+      return <Clock
+        key={i}
+        id={i}
+        city={favorite.city}
+        zone={favorite.zone}
+        hours12={this.props.hours12}
+        removeClock={this.removeFavorite}
+        debug={false} />;
+    }, this);
   },
 
   /**
@@ -71,108 +111,25 @@ var Wall = React.createClass({
    */
   render: function() {
 
-    var cities = this.props.cities;
-
-    var you = this._getYou();
-
-    var favorites = this._getFavoriteClocks();
-
-    // var zoneClocks = this._getClocks();
-    // var cityClocks = this._getCityClocks();
-
     return (
       <main>
-        <h1>Wall</h1>
-        <Search onChange={this._findCity} />
-        <button type="button" onClick={this._addFavorite}>ADD CITY</button>
-        <div className="you">{you}</div>
-        <div className="clocks">{favorites}</div>
+        <Search
+          searchString={this.props.cities.search}
+          items={this.props.cities.data}
+          onSelect={this.addFavorite} />
+
+        {this.props.showUserClock ?
+          <div className="user">
+            {this._getUserClock()}
+          </div>
+        : null}
+
+        <div className="favorites">
+          {this._getFavoriteClocks()}
+        </div>
       </main>
     );
-  },
-
-  _getYou: function() {
-
-    return <Clock
-      city={undefined}
-      zone={undefined}
-      hours12={false}
-      debug={false} />;
-  },
-
-  _getFavoriteClocks: function() {
-
-    return this.state.favorites.map(function(favorite, i) {
-
-      return <Clock
-        key={i}
-        city={favorite.city}
-        zone={favorite.zone}
-        hours12={false}
-        debug={true} />;
-
-    }, this);
-  },
-
-  _getClocks: function() {
-
-    return this.props.zones.map(function(zone, i) {
-
-      var city = {
-        "name": "Turin",
-        "country": "IT",
-        "lat": 45.07049,
-        "long": 7.68682,
-        "zone": "Europe/Rome"
-      };
-
-      return <Clock
-        key={i}
-        city={city}
-        zone={zone}
-        hours12={false}
-        debug={false} />;
-
-    }, this);
-  },
-
-  _getCityClocks: function() {
-
-    var zones = this._createZonesObject();
-
-    return this.props.cities.map(function(city, i) {
-
-      var zone = zones[city.zone];
-
-      if (zone) {
-        return <Clock
-          key={i}
-          city={city}
-          zone={zone}
-          showCity={true}
-          showCountry={true}
-          showDay={true}
-          hours12={false}
-          debug={false} />;
-      }
-
-
-    }, this);
-  },
-
-  _createZonesObject: function() {
-
-    var zones = this.props.zones;
-
-    var zonesObj = {};
-
-    zones.forEach(function(zone, i) {
-      zonesObj[zone.name] = zone;
-    });
-
-    return zonesObj;
   }
-
 });
 
 module.exports = Wall;

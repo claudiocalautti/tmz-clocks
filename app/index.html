@@ -4,24 +4,74 @@
     <title>TMZ App</title>
     <style>
       body {
+        background: powderblue;
         font-family: 'Courier New';
       }
-      .you .clock{
-        background: green;
+      time {
+        font-weight: bold;
+        font-size: 2.8rem;
+      }
+      time span:last-child {
+        font-size: 2rem;
+      }
+      .user .clock{
         color: white;
+        background: #01a093;
+        border: 2px solid rgba(0, 0, 0, 0.2);
       }
       .clock {
-        width: 40%;
+        width: 250px;
+        height: 250px;
         margin: 10px;
-        padding: 20px;
-        border: 3px solid;
+        padding: 45px 20px;
+        border-radius: 50%;
+        border: 2px dashed;
+        color: darkslategrey;
+        background: aliceblue;
+        text-align: center;
         box-sizing: border-box;
-        float: left;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .user {
+        width: 100%;
+        text-align: center;
+      }
+      .favorites {
+        text-align: center;
+      }
+      .search {
+        width: 250px;
+        position: absolute;
+      }
+      .search input[type=search] {
+        width: 100%;
+        font-size: 16px;
+        display: block;
+      }
+      .search ul {
+        margin: 0 5px;
+        padding: 5px;
+        list-style: none;
+      }
+      .search li {
+        padding: 5px;
+        background: white;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+      }
+      .search li:hover {
+        background: darkslategrey;
+        color: aliceblue;
+      }
+      .remove {
+        margin-top: -20px;
+        cursor: pointer;
+        display: block;
       }
     </style>
   </head>
   <body>
-    <div id="main"></div>
     <!-- App -->
     <script src="js/app.js"></script>
   </body>

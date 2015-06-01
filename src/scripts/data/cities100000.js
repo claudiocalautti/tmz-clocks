@@ -10070,8 +10070,8 @@ module.exports = {
     "1527534": {
       "name": "Osh",
       "country": "KG",
-      "lat": 40.51506,
-      "long": 72.80826,
+      "lat": 40.52828,
+      "long": 72.7985,
       "zone": "Asia/Bishkek"
     },
     "1528675": {

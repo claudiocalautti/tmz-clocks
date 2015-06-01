@@ -6,7 +6,7 @@ var React = require('react');
 
 /**
  * Clock component.
- * Get city with its timezone data and calculate time.
+ * Get city with its timezone data and calculate correct time.
  */
 var Clock = React.createClass({
 
@@ -15,14 +15,17 @@ var Clock = React.createClass({
    * @type {Object}
    */
   propTypes: {
+    id: React.PropTypes.number,
     city: React.PropTypes.object,
-    zone: React.PropTypes.object
+    zone: React.PropTypes.object,
+    hours12: React.PropTypes.bool,
+    removeClock: React.PropTypes.func,
+    debug: React.PropTypes.bool
   },
 
   /**
    * Invoked once before the component is mounted.
    * The return value will be used as the initial value of this.state.
-   * @type {Object}
    */
   getInitialState: function() {
 
@@ -30,7 +33,7 @@ var Clock = React.createClass({
 
     if (this.props.debug) {
       this.props.hours12 = false;
-      this.__testTime(date);
+      this._testTime(date);
     }
 
     return {
@@ -39,8 +42,8 @@ var Clock = React.createClass({
   },
 
   /**
-   * Invoked once, immediately before the initial rendering occurs.
    * Sync and start ticker.
+   * Invoked once, immediately before the initial rendering occurs.
    */
   componentWillMount: function() {
 
@@ -54,7 +57,19 @@ var Clock = React.createClass({
    * Remove the timer when the component unmounts.
    */
   componentWillUnmount: function() {
+
     this.timer && clearInterval(this.timer);
+  },
+
+  /**
+   * Handle click event. Dispatch remove clock with id.
+   * @param {Event} e The event object.
+   */
+  handleClick: function(e) {
+
+    if (typeof this.props.removeClock === 'function') {
+      this.props.removeClock(this.props.id);
+    }
   },
 
   /**
@@ -236,7 +251,7 @@ var Clock = React.createClass({
     }
 
     // When there are [start, end] pairs.
-    if (untils.length % PAIR === 0) {
+    if (untils.length > 1) {
 
       // Loop by 2 and check DST.
       for (var i = 0; i < untils.length; i += PAIR) {
@@ -277,7 +292,9 @@ var Clock = React.createClass({
     var mm = diff.mm;
 
     // Just `Today` if no difference from local time.
-    if (hh === 0 && mm === 0) return day.replace(', ', '');
+    if (hh === 0 && mm === 0) {
+      return day.replace(', ', '');
+    }
 
     var hours;
     var direction = (hh > 0) ? ' ahead.' : ' behind.';
@@ -297,7 +314,7 @@ var Clock = React.createClass({
 
   /**
    * Format a Number in two length.
-   * @param  {number} n The number to be converted.
+   * @param {number} n The number to be converted.
    * @return {string}   The formatted string.
    * @private
    */
@@ -309,12 +326,11 @@ var Clock = React.createClass({
   },
 
   /**
-   * Test my computed time with time given from .toLocaleString()
-   * for supported zones and log results.
-   * TODO: Remove for production.
+   * Test my computed time with time given from `toLocaleString`
+   * for supported zones only and log results.
    * @private
    */
-  __testTime: function(date) {
+  _testTime: function(date) {
 
     try {
 
@@ -369,23 +385,30 @@ var Clock = React.createClass({
 
     return (
       <div className="clock">
-        {this.props.debug ? <p>TZ: {this.props.zone.name}</p> : null}
+
+        {this.props.debug && this.props.zone ?
+          <p>TZ: {this.props.zone.name}</p>
+        : null}
+
+        {city ?
+          <span className="remove" onClick={this.handleClick}>X</span>
+        : null}
+
         <p>
           <strong>
             {city ? city.name : 'YOU'}
             {city && city.country ? ' (' + city.country + ')' : null}
           </strong>
         </p>
-        <p>
-          <strong>{time.hh}:{time.mm}:{time.ss}{time.hours12 ? ' ' + time.hours12 : null}</strong>
-        </p>
-        <p>
-          <strong>{time.when}{time.diff}</strong>
-        </p>
+
+        <time>{time.hh}:{time.mm}:{time.ss}{
+          time.hours12 ? ' ' + time.hours12 : null
+        }</time>
+
+        <p>{time.when}{time.diff}</p>
       </div>
     );
   }
-
 });
 
 module.exports = Clock;

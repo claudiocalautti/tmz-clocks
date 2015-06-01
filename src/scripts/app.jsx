@@ -6,20 +6,19 @@ var React = require('react');
 
 var Wall = require('./components/Wall.jsx');
 
-var cities = require('./data/cities100000.min.js');
-var zones = require('./data/zones.min.js');
+var cities = require('./data/cities100000.js');
+var zones = require('./data/zones.js');
 
 /**
- * App.
+ * Render Wall with cities and zones.
  */
-var App = React.createClass({
+React.render(
 
-  render: function () {
-    return (
-      <Wall cities={cities} zones={zones} />
-    );
-  }
+  <Wall
+    cities={cities}
+    zones={zones}
+    showUserClock={true}
+    hours12={false} />,
 
-});
-
-React.render(<App />, document.getElementById('main'));
+  document.body
+);

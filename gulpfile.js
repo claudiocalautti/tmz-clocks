@@ -29,7 +29,7 @@ function bundle() {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(uglify())
+        // .pipe(uglify())
         .on('error', function(e) {
           console.log('JS Error', e);
         })
@@ -65,9 +65,9 @@ gulp.task('serverRoot', function() {
   browserSyncRoot.init({
     open: false,
     notify: false,
-    files: ['./**/*'],
+    files: ['./src/','./app/'],
     server: {
-      baseDir: './'
+      baseDir: './src'
     },
     port: 3010
   });
