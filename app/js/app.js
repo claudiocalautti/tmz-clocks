@@ -1,13 +1,108 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./src/scripts/app.jsx":[function(require,module,exports){
-var React = require('React');
+var React = require('react');
 var Wall = require('./components/Wall.jsx');
 
+/**
+ * Render App.
+ */
 React.render(
   React.createElement(Wall, null),
   document.body
 );
 
-},{"./components/Wall.jsx":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Wall.jsx","React":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/react.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/AutoFocusMixin.js":[function(require,module,exports){
+},{"./components/Wall.jsx":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Wall.jsx","react":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/react.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = setTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            currentQueue[queueIndex].run();
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    clearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34,7 +129,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/focusNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+},{"./focusNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/focusNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -529,7 +624,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./FallbackCompositionState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticInputEvent.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSProperty.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./FallbackCompositionState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticInputEvent.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -654,7 +749,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSPropertyOperations.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -836,7 +931,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSProperty.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./camelizeStyleName":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/camelizeStyleName.js","./dangerousStyleValue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/dangerousStyleValue.js","./hyphenateStyleName":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/hyphenateStyleName.js","./memoizeStringOnly":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/memoizeStringOnly.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CallbackQueue.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSProperty.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./camelizeStyleName":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/camelizeStyleName.js","./dangerousStyleValue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/dangerousStyleValue.js","./hyphenateStyleName":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/hyphenateStyleName.js","./memoizeStringOnly":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CallbackQueue.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -936,7 +1031,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ChangeEventPlugin.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ChangeEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1318,7 +1413,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isEventSupported.js","./isTextInputElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isTextInputElement.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ClientReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isEventSupported.js","./isTextInputElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ClientReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1343,7 +1438,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMChildrenOperations.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMChildrenOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1481,7 +1576,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Danger.js","./ReactMultiChildUpdateTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMultiChildUpdateTypes.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./setTextContent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setTextContent.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js":[function(require,module,exports){
+},{"./Danger":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Danger.js","./ReactMultiChildUpdateTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./setTextContent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setTextContent.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1780,7 +1875,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1972,7 +2067,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./quoteAttributeValueForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/quoteAttributeValueForBrowser.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Danger.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./quoteAttributeValueForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/quoteAttributeValueForBrowser.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Danger.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2159,7 +2254,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createNodesFromMarkup.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js","./getMarkupWrap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getMarkupWrap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createNodesFromMarkup.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js","./getMarkupWrap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -2198,7 +2293,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+},{"./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -2338,7 +2433,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticMouseEvent.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticMouseEvent.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -2410,7 +2505,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventListener.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventListener.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2500,7 +2595,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2778,7 +2873,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginUtils.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/forEachAccumulated.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginRegistry.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginUtils.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginRegistry.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -3058,7 +3153,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginUtils.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -3279,7 +3374,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -3421,7 +3516,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/forEachAccumulated.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/forEachAccumulated.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -3465,7 +3560,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/FallbackCompositionState.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/FallbackCompositionState.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -3556,7 +3651,7 @@ PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
 
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./getTextContentAccessor":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getTextContentAccessor.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./getTextContentAccessor":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getTextContentAccessor.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -3767,7 +3862,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LinkedValueUtils.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LinkedValueUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -3923,7 +4018,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypes.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LocalEventTrapMixin.js":[function(require,module,exports){
+},{"./ReactPropTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypes.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LocalEventTrapMixin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -3980,7 +4075,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/forEachAccumulated.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -4038,7 +4133,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -4087,7 +4182,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -4203,7 +4298,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/React.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/React.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -4355,7 +4450,7 @@ React.version = '0.13.3';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginUtils.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactChildren.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponent.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactDOM":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOM.js","./ReactDOMTextComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMTextComponent.js","./ReactDefaultInjection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultInjection.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./ReactPropTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypes.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js","./ReactServerRendering":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactServerRendering.js","./findDOMNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/findDOMNode.js","./onlyChild":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/onlyChild.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
+},{"./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginUtils.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponent.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactDOM":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOM.js","./ReactDOMTextComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMTextComponent.js","./ReactDefaultInjection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultInjection.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./ReactPropTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypes.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js","./ReactServerRendering":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactServerRendering.js","./findDOMNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/findDOMNode.js","./onlyChild":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/onlyChild.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -4386,7 +4481,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 
-},{"./findDOMNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/findDOMNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+},{"./findDOMNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/findDOMNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -4739,7 +4834,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginRegistry.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactEventEmitterMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ViewportMetrics.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isEventSupported.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactChildReconciler.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginRegistry.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactEventEmitterMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ViewportMetrics.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isEventSupported.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactChildReconciler.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -4866,7 +4961,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 
-},{"./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js","./flattenChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/flattenChildren.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shouldUpdateReactComponent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactChildren.js":[function(require,module,exports){
+},{"./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js","./flattenChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/flattenChildren.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shouldUpdateReactComponent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5019,7 +5114,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactFragment.js","./traverseAllChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/traverseAllChildren.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactFragment.js","./traverseAllChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5965,7 +6060,7 @@ var ReactClass = {
 module.exports = ReactClass;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponent.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactErrorUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactLifeCycle.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocations.js","./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdateQueue.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponent.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponent.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactErrorUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactLifeCycle.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocations.js","./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdateQueue.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6119,7 +6214,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdateQueue.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+},{"./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdateQueue.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -6166,7 +6261,7 @@ var ReactComponentBrowserEnvironment = {
 
 module.exports = ReactComponentBrowserEnvironment;
 
-},{"./ReactDOMIDOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMIDOperations.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentEnvironment.js":[function(require,module,exports){
+},{"./ReactDOMIDOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMIDOperations.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentEnvironment.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -6227,7 +6322,7 @@ var ReactComponentEnvironment = {
 module.exports = ReactComponentEnvironment;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCompositeComponent.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCompositeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7140,7 +7235,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentEnvironment.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactLifeCycle.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactNativeComponent.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocations.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyObject.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shouldUpdateReactComponent.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactContext.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentEnvironment.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactLifeCycle.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocations.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyObject.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactContext.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7218,7 +7313,7 @@ var ReactContext = {
 module.exports = ReactContext;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyObject.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyObject.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7252,7 +7347,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOM.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOM.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7431,7 +7526,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js","./mapObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/mapObject.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMButton.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js","./mapObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/mapObject.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMButton.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7495,7 +7590,7 @@ var ReactDOMButton = ReactClass.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMComponent.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8005,7 +8100,7 @@ ReactDOMComponent.injection = {
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSPropertyOperations.js","./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentBrowserEnvironment.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactMultiChild":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMultiChild.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/escapeTextContentForBrowser.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isEventSupported.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMForm.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSPropertyOperations.js","./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/escapeTextContentForBrowser.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./isEventSupported":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isEventSupported.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMForm.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8054,7 +8149,7 @@ var ReactDOMForm = ReactClass.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMIDOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8222,7 +8317,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setInnerHTML.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMIframe.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setInnerHTML.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMIframe.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8267,7 +8362,7 @@ var ReactDOMIframe = ReactClass.createClass({
 
 module.exports = ReactDOMIframe;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMImg.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMImg.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8313,7 +8408,7 @@ var ReactDOMImg = ReactClass.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMInput.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMInput.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8490,7 +8585,7 @@ var ReactDOMInput = ReactClass.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMOption.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMOption.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8542,7 +8637,7 @@ var ReactDOMOption = ReactClass.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMSelect.js":[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMSelect.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8720,7 +8815,7 @@ var ReactDOMSelect = ReactClass.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/AutoFocusMixin.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMSelection.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/AutoFocusMixin.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8933,7 +9028,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getTextContentAccessor.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMTextComponent.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getTextContentAccessor.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMTextComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9050,7 +9145,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 
-},{"./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMComponent.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/escapeTextContentForBrowser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMTextarea.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMComponent.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/escapeTextContentForBrowser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMTextarea.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9190,7 +9285,7 @@ var ReactDOMTextarea = ReactClass.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9263,7 +9358,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Transaction.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultInjection.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultInjection.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9422,7 +9517,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ClientReactRootIndex.js","./DefaultEventPluginOrder":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMButton.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMComponent.js","./ReactDOMForm":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMForm.js","./ReactDOMIDOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMIDOperations.js","./ReactDOMIframe":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMIframe.js","./ReactDOMImg":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMImg.js","./ReactDOMInput":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMSelect.js","./ReactDOMTextComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMTextComponent.js","./ReactDOMTextarea":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultPerf.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactEventListener":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEventListener.js","./ReactInjection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInjection.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactReconcileTransaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SimpleEventPlugin.js","./createFullPageComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createFullPageComponent.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultPerf.js":[function(require,module,exports){
+},{"./BeforeInputEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ClientReactRootIndex.js","./DefaultEventPluginOrder":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactComponentBrowserEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMButton.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMComponent.js","./ReactDOMForm":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMForm.js","./ReactDOMIDOperations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMIDOperations.js","./ReactDOMIframe":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMIframe.js","./ReactDOMImg":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMImg.js","./ReactDOMInput":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMSelect.js","./ReactDOMTextComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMTextComponent.js","./ReactDOMTextarea":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultPerf.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactEventListener":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEventListener.js","./ReactInjection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInjection.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactReconcileTransaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SimpleEventPlugin.js","./createFullPageComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createFullPageComponent.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultPerf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9688,7 +9783,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./performanceNow":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/performanceNow.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./performanceNow":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/performanceNow.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9894,7 +9989,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -10202,7 +10297,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactContext":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -10667,7 +10762,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactFragment.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactNativeComponent.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocations.js","./getIteratorFn":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getIteratorFn.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEmptyComponent.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactFragment.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactNativeComponent.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocations.js","./getIteratorFn":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getIteratorFn.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEmptyComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -10762,7 +10857,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactErrorUtils.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactErrorUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10794,7 +10889,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10844,7 +10939,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEventListener.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEventListener.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11027,7 +11122,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventListener.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventTarget.js","./getUnboundedScrollPosition":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getUnboundedScrollPosition.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactFragment.js":[function(require,module,exports){
+},{"./EventListener":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventListener.js","./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventTarget.js","./getUnboundedScrollPosition":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactFragment.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -11212,7 +11307,7 @@ var ReactFragment = {
 module.exports = ReactFragment;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInjection.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11254,7 +11349,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentEnvironment.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMComponent.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactNativeComponent.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./ReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactRootIndex.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInputSelection.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./EventPluginHub":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentEnvironment.js","./ReactDOMComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMComponent.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./ReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactRootIndex.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInputSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11389,7 +11484,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactDOMSelection.js","./containsNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/containsNode.js","./focusNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/focusNode.js","./getActiveElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getActiveElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js":[function(require,module,exports){
+},{"./ReactDOMSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactDOMSelection.js","./containsNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/containsNode.js","./focusNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/focusNode.js","./getActiveElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getActiveElement.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11725,7 +11820,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactRootIndex.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js":[function(require,module,exports){
+},{"./ReactRootIndex":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactRootIndex.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11774,7 +11869,7 @@ var ReactInstanceMap = {
 
 module.exports = ReactInstanceMap;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactLifeCycle.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactLifeCycle.js":[function(require,module,exports){
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -11811,7 +11906,7 @@ var ReactLifeCycle = {
 
 module.exports = ReactLifeCycle;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMarkupChecksum.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11859,7 +11954,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/adler32.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js":[function(require,module,exports){
+},{"./adler32":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/adler32.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12750,7 +12845,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEmptyComponent.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./ReactMarkupChecksum":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMarkupChecksum.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./containsNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/containsNode.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyObject.js","./getReactRootElementInContainer":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/instantiateReactComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shouldUpdateReactComponent.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMultiChild.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEmptyComponent.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./ReactMarkupChecksum":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMarkupChecksum.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./containsNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/containsNode.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyObject.js","./getReactRootElementInContainer":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMultiChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13180,7 +13275,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactChildReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactComponentEnvironment.js","./ReactMultiChildUpdateTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMultiChildUpdateTypes.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
+},{"./ReactChildReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactComponentEnvironment.js","./ReactMultiChildUpdateTypes":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13213,7 +13308,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactNativeComponent.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactNativeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -13320,7 +13415,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactOwner.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13432,7 +13527,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13536,7 +13631,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13564,7 +13659,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocations.js":[function(require,module,exports){
+},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocations.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13588,7 +13683,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypes.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13937,7 +14032,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactFragment.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPropTypeLocationNames.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPutListenerQueue.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactFragment.js","./ReactPropTypeLocationNames":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPropTypeLocationNames.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPutListenerQueue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13993,7 +14088,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconcileTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14169,7 +14264,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPutListenerQueue.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Transaction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Transaction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14293,7 +14388,7 @@ var ReactReconciler = {
 module.exports = ReactReconciler;
 
 }).call(this,require('_process'))
-},{"./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElementValidator.js","./ReactRef":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactRef.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactRef.js":[function(require,module,exports){
+},{"./ReactElementValidator":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElementValidator.js","./ReactRef":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactRef.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactRef.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14364,7 +14459,7 @@ ReactRef.detachRefs = function(instance, element) {
 
 module.exports = ReactRef;
 
-},{"./ReactOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactOwner.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactRootIndex.js":[function(require,module,exports){
+},{"./ReactOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactOwner.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14395,7 +14490,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactServerRendering.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactServerRendering.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14477,7 +14572,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactServerRenderingTransaction.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyObject.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/instantiateReactComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactServerRenderingTransaction.js","./emptyObject":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyObject.js","./instantiateReactComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -14590,7 +14685,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactPutListenerQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPutListenerQueue.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Transaction.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdateQueue.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactPutListenerQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdateQueue.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -14889,7 +14984,7 @@ var ReactUpdateQueue = {
 module.exports = ReactUpdateQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactLifeCycle.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactUpdates.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./ReactLifeCycle":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactLifeCycle.js","./ReactUpdates":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactUpdates.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15171,7 +15266,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactPerf.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactReconciler.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Transaction.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactPerf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactPerf.js","./ReactReconciler":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactReconciler.js","./Transaction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Transaction.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15265,7 +15360,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/DOMProperty.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SelectEventPlugin.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/DOMProperty.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SelectEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15460,7 +15555,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js","./ReactInputSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js","./getActiveElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getActiveElement.js","./isTextInputElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isTextInputElement.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js","./shallowEqual":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shallowEqual.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ServerReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js","./ReactInputSelection":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js","./getActiveElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getActiveElement.js","./isTextInputElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js","./shallowEqual":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shallowEqual.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ServerReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15491,7 +15586,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SimpleEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SimpleEventPlugin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15919,7 +16014,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventConstants.js","./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPluginUtils.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/EventPropagators.js","./SyntheticClipboardEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventCharCode.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventConstants.js","./EventPluginUtils":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPluginUtils.js","./EventPropagators":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/EventPropagators.js","./SyntheticClipboardEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventCharCode.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./keyOf":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15964,7 +16059,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
 
-},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16009,7 +16104,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticCompositionEvent;
 
-},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticDragEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticDragEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16048,7 +16143,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticMouseEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16214,7 +16309,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/PooledClass.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventTarget.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/PooledClass.js","./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventTarget.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticFocusEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16253,7 +16348,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticInputEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticInputEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16299,7 +16394,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticInputEvent;
 
-},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16386,7 +16481,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventCharCode.js","./getEventKey":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventKey.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventCharCode.js","./getEventKey":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventKey.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticMouseEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16467,7 +16562,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ViewportMetrics.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ViewportMetrics.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticTouchEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16515,7 +16610,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticUIEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventModifierState.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticUIEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16577,7 +16672,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticEvent.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventTarget.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticEvent.js","./getEventTarget":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventTarget.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticWheelEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16638,7 +16733,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/SyntheticMouseEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Transaction.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Transaction.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16879,7 +16974,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ViewportMetrics.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ViewportMetrics.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16908,7 +17003,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/accumulateInto.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/accumulateInto.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -16974,7 +17069,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/adler32.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/adler32.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17008,7 +17103,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/camelize.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/camelize.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17040,7 +17135,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/camelizeStyleName.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/camelizeStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -17082,7 +17177,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/camelize.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/camelize.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/containsNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17126,7 +17221,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isTextNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createArrayFromMixed.js":[function(require,module,exports){
+},{"./isTextNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isTextNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createArrayFromMixed.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17212,7 +17307,7 @@ function createArrayFromMixed(obj) {
 
 module.exports = createArrayFromMixed;
 
-},{"./toArray":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/toArray.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createFullPageComponent.js":[function(require,module,exports){
+},{"./toArray":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/toArray.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createFullPageComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17274,7 +17369,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createNodesFromMarkup.js":[function(require,module,exports){
+},{"./ReactClass":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactClass.js","./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createNodesFromMarkup.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17364,7 +17459,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getMarkupWrap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/dangerousStyleValue.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/dangerousStyleValue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17422,7 +17517,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/CSSProperty.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/CSSProperty.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17456,7 +17551,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyObject.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyObject.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17480,7 +17575,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
+},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17520,7 +17615,7 @@ function escapeTextContentForBrowser(text) {
 
 module.exports = escapeTextContentForBrowser;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/findDOMNode.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/findDOMNode.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17593,7 +17688,7 @@ function findDOMNode(componentOrElement) {
 module.exports = findDOMNode;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCurrentOwner.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceMap.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactMount.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./isNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isNode.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/flattenChildren.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCurrentOwner.js","./ReactInstanceMap":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceMap.js","./ReactMount":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactMount.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./isNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isNode.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/flattenChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17651,7 +17746,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./traverseAllChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/traverseAllChildren.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/focusNode.js":[function(require,module,exports){
+},{"./traverseAllChildren":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/focusNode.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -17680,7 +17775,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/forEachAccumulated.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/forEachAccumulated.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17711,7 +17806,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getActiveElement.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getActiveElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17740,7 +17835,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventCharCode.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventCharCode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17792,7 +17887,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventKey.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventKey.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17897,7 +17992,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventCharCode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventModifierState.js":[function(require,module,exports){
+},{"./getEventCharCode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventCharCode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventModifierState.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17944,7 +18039,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getEventTarget.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getEventTarget.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17975,7 +18070,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getIteratorFn.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18019,7 +18114,7 @@ function getIteratorFn(maybeIterable) {
 
 module.exports = getIteratorFn;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getMarkupWrap.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getMarkupWrap.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18138,7 +18233,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18213,7 +18308,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getReactRootElementInContainer.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getReactRootElementInContainer.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18248,7 +18343,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getTextContentAccessor.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getTextContentAccessor.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18285,7 +18380,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18325,7 +18420,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/hyphenate.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/hyphenate.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18358,7 +18453,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/hyphenateStyleName.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/hyphenateStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18399,7 +18494,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/hyphenate.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/instantiateReactComponent.js":[function(require,module,exports){
+},{"./hyphenate":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/hyphenate.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/instantiateReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18537,7 +18632,7 @@ function instantiateReactComponent(node, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/Object.assign.js","./ReactCompositeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactNativeComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/Object.assign.js","./ReactCompositeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactNativeComponent.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18594,7 +18689,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isEventSupported.js":[function(require,module,exports){
+},{"_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isEventSupported.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18659,7 +18754,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isNode.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18686,7 +18781,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isTextInputElement.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isTextInputElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18729,7 +18824,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isTextNode.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isTextNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18754,7 +18849,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/isNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyMirror.js":[function(require,module,exports){
+},{"./isNode":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/isNode.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyMirror.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18809,7 +18904,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/keyOf.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/keyOf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18845,7 +18940,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/mapObject.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/mapObject.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18898,7 +18993,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/memoizeStringOnly.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/memoizeStringOnly.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18931,7 +19026,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/onlyChild.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18971,7 +19066,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/performance.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/performance.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18999,7 +19094,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/performanceNow.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/performanceNow.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19027,7 +19122,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/performance.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
+},{"./performance":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/performance.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19055,7 +19150,7 @@ function quoteAttributeValueForBrowser(value) {
 
 module.exports = quoteAttributeValueForBrowser;
 
-},{"./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/escapeTextContentForBrowser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setInnerHTML.js":[function(require,module,exports){
+},{"./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/escapeTextContentForBrowser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setInnerHTML.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19144,7 +19239,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setTextContent.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setTextContent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19186,7 +19281,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setTextContent;
 
-},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ExecutionEnvironment.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/setInnerHTML.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shallowEqual.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ExecutionEnvironment.js","./escapeTextContentForBrowser":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/setInnerHTML.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shallowEqual.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19230,7 +19325,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19334,7 +19429,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 }).call(this,require('_process'))
-},{"./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/toArray.js":[function(require,module,exports){
+},{"./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/toArray.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -19406,7 +19501,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/traverseAllChildren.js":[function(require,module,exports){
+},{"./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19659,7 +19754,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactFragment.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/ReactInstanceHandles.js","./getIteratorFn":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/getIteratorFn.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/warning.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactElement.js","./ReactFragment":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactFragment.js","./ReactInstanceHandles":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/ReactInstanceHandles.js","./getIteratorFn":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/getIteratorFn.js","./invariant":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/invariant.js","./warning":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/warning.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -19722,110 +19817,355 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/emptyFunction.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/react.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/emptyFunction.js","_process":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/react.js":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/lib/React.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
-// shim for using process in browser
+},{"./lib/React":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/lib/React.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Clock.jsx":[function(require,module,exports){
+var React = require('react');
 
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
+/**
+ * Clock component (React docs on api methods).
+ * @description Get country with its timezone data and calculate time.
+ * @constructor
+ */
+module.exports = React.createClass({
 
-function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
+  /**
+   * Manually set component name because with browserify
+   * react detect `exports` by default.
+   * @type {string}
+   */
+  displayName: 'Clock',
+
+  /**
+   * Validate props.
+   * @type {Object}
+   */
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    zone: React.PropTypes.object.isRequired
+  },
+
+  /**
+   * Invoked once before the component is mounted.
+   * The return value will be used as the initial value of this.state.
+   * Set initial time and date.
+   * @type {Object}
+   */
+  getInitialState: function() {
+    return {
+      time: this._getTime(),
+      date: this._getDate()
+    };
+  },
+
+  /**
+   * Invoked once, immediately before the initial rendering occurs.
+   * Sync and start ticker.
+   */
+  componentWillMount: function() {
+
+    var delay = this._syncTime();
+
+    setTimeout(function() {
+
+      this._tick();
+      this.timer = setInterval(this._tick, 1000);
+
+    }.bind(this), delay);
+  },
+
+  /**
+   * Remove the timer when the component unmounts.
+   */
+  componentWillUnmount: function() {
+    this.timer && clearInterval(this.timer);
+  },
+
+  /**
+   * Sync time by detecting when next tick will occour.
+   * @return {number} The amount of ms left before next tick.
+   * @private
+   */
+  _syncTime: function() {
+
+    var date = new Date();
+
+    return 1000 - date.getMilliseconds();
+  },
+
+  /**
+   * Ticker, update state to current time.
+   * @private
+   */
+  _tick: function() {
+
+    this.setState({
+      time: this._getTime()
+    });
+  },
+
+  /**
+   * Set the clock object to current time.
+   * @return {Object} The current time.
+   * @private
+   */
+  _getTime: function() {
+
+    var date = new Date();
+    var offset = this._getOffset(date);
+
+    var hh = date.getHours() + offset.HH;
+    var mm = date.getMinutes() + offset.MM;
+
+    if (hh < 0) {
+      hh = 24 - Math.abs(hh);
+    }
+
+    if (mm > 60) {
+      mm = mm - 60;
+    }
+
+    return {
+      HH: this._pad(hh),
+      MM: this._pad(mm),
+      SS: this._pad(date.getSeconds())
+    };
+  },
+
+  /**
+   * Get offset.
+   * @param {Object} date The `new Date()` object.
+   * @private
+   */
+  _getOffset: function(date) {
+
+    var isDST = this._isDST();
+
+    var offset = date.getTimezoneOffset();
+
+    var offsets = this.props.zone.offsets;
+
+    // Last offset in array is associated with
+    // untils `null` and never refer to DST.
+    var lastOffset = offsets.length - 1;
+
+    if (isDST) {
+      offset -= offsets[lastOffset - 1];
     } else {
-        queueIndex = -1;
+      offset -= offsets[lastOffset];
     }
-    if (queue.length) {
-        drainQueue();
-    }
-}
 
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
+    var HH = Math.floor(offset / 60);
+    var MM = offset - (HH * 60);
 
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+    return {
+      HH: HH,
+      MM: MM
+    };
+  },
+
+  /**
+   * Detect if DST is currently observed.
+   * @param {Object} date The `new Date()` object.
+   * @private
+   */
+  _isDST: function() {
+
+    var isDST = false;
+
+    var PAIR = 2;
+
+    var now = Date.now();
+
+    var untils = this.props.zone.untils;
+
+    // Remove last item in array when it's null.
+    if (!untils[untils.length - 1]) {
+      untils.pop();
+    }
+
+    // Warn if DST is observed more than twice.
+    if (untils.length > PAIR * 2) {
+      var zone = this.props.zone.name;
+      console.warn('DST is observed more than twice this year in ' + zone);
+    }
+
+    // When there are [start, end] pairs.
+    if (untils.length % PAIR === 0) {
+
+      // Loop by 2 and check DST.
+      for (var i = 0; i < untils.length; i += PAIR) {
+
+        var start = untils[i];
+        var end = untils [i + 1];
+
+        // DST not started or finished.
+        if (now < start || now > end) {
+          continue;
         }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-}
 
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
+        // DST observed.
+        if (now < end) {
+          isDST = true;
         }
+      }
+    } else if (untils.length === 1) {
+      // When there is only end, check if DST is still observed.
+      if (now < untils[0]) {
+        isDST = true;
+      }
     }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
 
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
+    return isDST;
+  },
 
-function noop() {}
 
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
+  /**
+   * Get current date.
+   * @return {string} The current date formatted as DD:MM:YYYY.
+   * @private
+   */
+  _getDate: function() {
 
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
+    var date = new Date();
 
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
+    var options = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    };
 
-},{}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Wall.jsx":[function(require,module,exports){
-var React = require('React');
+    return date.toLocaleDateString('en-GB', options);
+  },
 
-module.exports = React.createClass({displayName: "exports",
+  /**
+   * Format a Number in two length.
+   * @param  {number} n The number to be converted.
+   * @return {string}   The formatted string.
+   * @private
+   */
+  _pad: function(n) {
+
+    var nString = n.toString();
+
+    return (n < 10) ? '0' + nString : nString;
+  },
+
+  /**
+   * Render.
+   * @return {ReactElement} The Clock component.
+   */
   render: function() {
+
+    var country = this.props.country;
+    var zone = this.props.zone;
+
+    var time = this.state.time;
+
     return (
-      React.createElement("h1", null, "Hello, world from a React.js Component!")
+      React.createElement("div", {className: "clock"}, 
+        React.createElement("p", null, 
+          "Country: ", React.createElement("strong", null, country)
+        ), 
+        React.createElement("p", null, 
+          "Zone: ", React.createElement("strong", null, zone.name, " (", zone.abbrs[0], ")")
+        ), 
+        React.createElement("p", null, 
+          "Time: ", React.createElement("strong", null, time.HH, ":", time.MM, ":", time.SS)
+        ), 
+        React.createElement("p", null, 
+          "Date: ", React.createElement("strong", null, this.state.date)
+        )
+      )
     );
   }
 });
 
-},{"React":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/React/react.js"}]},{},["./src/scripts/app.jsx"]);
+},{"react":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/react.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Search.jsx":[function(require,module,exports){
+var React = require('react');
+
+/**
+ * Search component.
+ * @description Capture user input and display a filtered list of countries
+ *              with related timezone, when item clicked dispatch new country.
+ * @constructor
+ */
+module.exports = React.createClass({
+
+  displayName: 'Search',
+
+  /**
+   * Render.
+   * @return {ReactElement} The Search component.
+   */
+  render: function() {
+    return (
+      React.createElement("div", null, 
+        React.createElement("h2", null, "Search"), 
+        React.createElement("input", {type: "search", value: ""}), 
+        React.createElement("ul", null, 
+          React.createElement("li", null, "item"), 
+          React.createElement("li", null, "item"), 
+          React.createElement("li", null, "item")
+        )
+      )
+    );
+  }
+});
+
+},{"react":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/react.js"}],"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Wall.jsx":[function(require,module,exports){
+var React = require('react');
+var Search = require('./Search.jsx');
+var Clock = require('./Clock.jsx');
+
+/**
+ * Wall component.
+ * @description Get zones and generate all clocks.
+ *              Initialise Search component.
+ *              ...filters, keep data with local storage etc.
+ * @constructor
+ */
+module.exports = React.createClass({
+
+  displayName: 'Wall',
+
+  /**
+   * Render.
+   * @return {ReactElement} The Wall component.
+   */
+  render: function() {
+
+    var country = 'Italy';
+
+    var zone = {
+      "name": "Europe/Rome",
+      "abbrs": [
+        "CET",
+        "CEST",
+        "CET"
+      ],
+      "untils": [
+        1427590800000,
+        1445734800000,
+        null
+      ],
+      "offsets": [
+        -60,
+        -120,
+        -60
+      ]
+    };
+
+    return (
+      React.createElement("main", null, 
+        React.createElement("h1", null, "Wall"), 
+        React.createElement(Search, null), 
+        React.createElement(Clock, {country: country, zone: zone})
+      )
+    );
+  }
+});
+
+},{"./Clock.jsx":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Clock.jsx","./Search.jsx":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/src/scripts/components/Search.jsx","react":"/Users/claudiocalautti/Projects/TmzTab/tmz-clocks-app/node_modules/react/react.js"}]},{},["./src/scripts/app.jsx"]);

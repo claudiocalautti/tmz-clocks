@@ -30,20 +30,38 @@ function bundle() {
 gulp.task('scripts', bundle);
 
 
-// Server
-var browserSync = require('browser-sync').create();
+// Dev Server
+var browserSyncDev = require('browser-sync').create('Dev');
 
-gulp.task('server', ['scripts'], function() {
+gulp.task('serverDev', ['scripts'], function() {
 
-  browserSync.init({
+  browserSyncDev.init({
     open: false,
     notify: false,
     files: ['./app/css/*.css', './app/js/*.js', './app/*.html'],
     server: {
       baseDir: './app'
-    }
+    },
+    port: 3000
   });
 });
 
 
-gulp.task('default', ['scripts', 'server']);
+// Root Server
+var browserSyncRoot = require('browser-sync').create('Root');
+
+gulp.task('serverRoot', function() {
+
+  browserSyncRoot.init({
+    open: false,
+    notify: false,
+    files: ['./**/*'],
+    server: {
+      baseDir: './'
+    },
+    port: 3010
+  });
+});
+
+
+gulp.task('default', ['scripts', 'serverDev', 'serverRoot']);

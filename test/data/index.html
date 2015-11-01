@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TMZ Data Tests</title>
+  </head>
+  <body>
+    <h1>Data Test</h1>
+    <pre class="results"></pre>
+
+    <script>
+
+      var XHR = new XMLHttpRequest();
+
+      XHR.onload = testZones;
+
+      XHR.open('GET', '/app/data/unpacked/2015d.json', true);
+      XHR.send();
+
+      // Test.
+      function testZones(e) {
+
+        var data = JSON.parse(e.target.response);
+
+        data.zones.forEach(function(zone, i) {
+
+          var untils = zone.untils;
+
+          // Make sure that last value in untils is null.
+          // Because moment-timezone use Infinity in task/data-dedupe.js,
+          // and because when there is only end DST null rapresent the
+          // offset when DST is not observed.
+          if (untils[untils.length - 1] !== null) {
+            addMessage('.results', '⚠ Last value not NULL in untils for: ' + zone.name, 'red');
+          } else if (i === data.zones.length - 1) {
+            addMessage('.results', '✔ All `zones.untils` OK', 'green');
+          }
+
+          // Check that abbrs untils and offsets are of the same length
+          if (zone.abbrs.length !== zone.untils.length ||
+              zone.abbrs.length !== zone.offsets.length) {
+            addMessage('.results', '⚠ Mistmatch length of: ' + zone.name, 'red');
+          }
+
+          // Check DST start/end pairs.
+
+          zone.untils.pop() // Remove null to check pairs.
+
+          if (zone.untils.length === 4) {
+            addMessage('.results', '✔ DST is observed twice in: ' + zone.name, 'blue');
+
+            if (zone.offsets[0] !== zone.offsets[2]) {
+              addMessage('.results', '⚠ Mistmatch offsets of: ' + zone.name, 'red');
+            }
+
+            if (zone.offsets[1] !== zone.offsets[3]) {
+              addMessage('.results', '⚠ Mistmatch offsets of: ' + zone.name, 'red');
+            }
+          }
+
+          if (zone.untils.length > 4) {
+            addMessage('.results', '⚠ DST is observed more than twice in: ' + zone.name, 'orange');
+          }
+
+          if (zone.untils.length === 3) {
+            addMessage('.results', '⚠ DST is weird in: ' + zone.name, 'orange');
+          }
+
+          if (zone.untils.length < 2) {
+            addMessage('.results', '✔ DST only end in: ' + zone.name, 'blue');
+          }
+        });
+      };
+
+      // Helpers.
+      function addMessage(selector, message, color) {
+        var container = document.querySelector(selector);
+        var p = document.createElement('p');
+        p.style.color = color;
+        p.innerText = message;
+        container.appendChild(p);
+        console.log(message);
+      }
+    </script>
+
+  </body>
+</html>
